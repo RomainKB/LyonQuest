@@ -1,0 +1,171 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="FirstTheme" >
+        <item name="android:background">@color/Background1</item>
+        <item name="android:buttonStyle">@style/ButtonStyle1</item>
+        <item name="android:textViewStyle">@style/TextStyle1</item>
+        <item name="android:editTextStyle">@style/EditTextStyle1</item>
+        <item name="android:colorAccent">@color/textBtnColor1</item>
+        <item name="android:colorPrimaryDark">@color/btnBackground1</item>
+        <item name="android:actionBarStyle">@null</item>
+        <item name="android:textColorHighlight">@color/textBtnColor1</item>
+
+    </style>
+
+    <style name="SecondTheme" >
+        <item name="android:background">@color/Background2</item>
+        <item name="android:buttonStyle">@style/ButtonStyle2</item>
+        <item name="android:textViewStyle">@style/TextStyle2</item>
+        <item name="android:editTextStyle">@style/EditTextStyle2</item>
+        <item name="android:colorAccent">@color/textBtnColor2</item>
+        <item name="android:colorPrimaryDark">@color/btnBackground2</item>
+        <item name="android:actionBarStyle">@null</item>
+        <item name="android:textColorHighlight">@color/textBtnColor2</item>
+    </style>
+
+    <style name="Thirdheme" >
+        <item name="android:background">@color/Background3</item>
+        <item name="android:buttonStyle">@style/ButtonStyle3</item>
+        <item name="android:textViewStyle">@style/TextStyle3</item>
+        <item name="android:editTextStyle">@style/EditTextStyle3</item>
+        <item name="android:colorAccent">@color/textBtnColor3</item>
+        <item name="android:colorPrimaryDark">@color/btnBackground3</item>
+        <item name="android:actionBarStyle">@null</item>
+        <item name="android:textColorHighlight">@color/textBtnColor3</item>
+    </style>
+
+
+    <!-- A partir de la on va créer les surcharges -->
+
+    <!-- On commence par les boutons -->
+
+    <style name="ButtonStyleGene">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/layoutMarginStart</item>
+        <item name="android:layout_marginEnd">@dimen/layoutMarginEnd</item>
+        <item name="android:layout_marginBottom">@dimen/layoutMarginBottom</item>
+        <item name="android:layout_marginTop">@dimen/layoutMarginTop</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textSize">@dimen/textSize</item>
+    </style>
+
+    <style name="ButtonStyle1" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button1</item>
+        <item name="android:textColor">@color/textBtnColor1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">serif</item>
+
+    </style>
+
+    <style name="ButtonStyle2" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button2</item>
+        <item name="android:textColor">@color/textBtnColor2</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">serif</item>
+
+    </style>
+
+    <style name="ButtonStyle3" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button3</item>
+        <item name="android:textColor">@color/textBtnColor3</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">serif</item>
+
+    </style>
+
+    <!-- On passe maintenant au text et titres-->
+
+    <style name="TextStyleGene">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/layoutMarginStart</item>
+        <item name="android:layout_marginEnd">@dimen/layoutMarginEnd</item>
+        <item name="android:layout_marginBottom">@dimen/layoutMarginBottom</item>
+        <item name="android:layout_marginTop">@dimen/layoutMarginTop</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textSize">@dimen/textSize</item>
+
+
+    </style>
+
+    <style name="TitleStyleGene">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/layoutMarginStart</item>
+        <item name="android:layout_marginEnd">@dimen/layoutMarginEnd</item>
+        <item name="android:layout_marginBottom">@dimen/layoutMarginBottom</item>
+        <item name="android:layout_marginTop">@dimen/layoutMarginTop</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textSize">@dimen/titleSize</item>
+
+
+    </style>
+
+    <style name="TextStyle1" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextStyle2" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="TextStyle3" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <!-- On fini avec les EditText -->
+
+    <style name="EditTextStyleGene">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/layoutMarginStart</item>
+        <item name="android:layout_marginEnd">@dimen/layoutMarginEnd</item>
+        <item name="android:layout_marginBottom">@dimen/layoutMarginBottomEditText</item>
+        <item name="android:layout_marginTop">@dimen/layoutMarginTop</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textSize">@dimen/textSize</item>
+
+    </style>
+
+    <style name="EditTextStyle1" parent="@android:style/Widget.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor1</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:backgroundTint">@color/textBtnColor1</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="EditTextStyle2" parent="@android:style/Widget.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor2</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:backgroundTint">@color/textBtnColor2</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="EditTextStyle3" parent="@android:style/Widget.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor3</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:backgroundTint">@color/textBtnColor3</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+
+
+
+</resources>

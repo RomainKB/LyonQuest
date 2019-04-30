@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">LyonQuest</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="prompt_password_confirmation">Confirmation du mot de passe</string>
+
+    <string name="prompt_id">Identifiant</string>
+    <string name="action_sign_in">Se connecter</string>
+    <string name="action_registration">Inscription</string>
+    <string name="action_sign_in_short">Se connecter</string>
+    <string name="error_invalid_email">Cette adresse e-mail est invalide</string>
+    <string name="error_invalid_username">Cet identifiant est invalide</string>
+    <string name="error_invalid_password">Ce mot de passe est trop court</string>
+    <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
+    <string name="error_incorrect_password_confirmation">La confirmation ne correspond pas au mot de passe initial</string>
+    <string name="error_field_required">Veuillez completer ce champ</string>
+    <string name="permission_rationale">"Pour l'auto-complétion de l'email nous avons besoin de cet accord."</string>
+    <string name="title_activity_main">LyonQuest</string>
+    <string name="title_activity_registration">Inscription</string>
+
+
+    <string name="title_route">Choix du parcours</string>
+    <string name="title_add">Création parcours</string>
+    <string name="title_settings">Paramètres</string>
+
+
+    <string name="bottom_navigation_menu_left">Parcours</string>
+    <string name="bottom_navigation_menu_middle">Création</string>
+    <string name="bottom_navigation_menu_right">Paramètres</string>
+</resources>
