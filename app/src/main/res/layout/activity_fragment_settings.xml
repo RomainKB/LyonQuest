@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentSettings">
+    tools:context=".FragmentSettings"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/setting_text"
+        style="@style/TextStyleGene"
+        android:text="Settings" />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        style="@style/ButtonStyleGene"
+        android:text="@string/action_sign_out"
+        />
+</LinearLayout>
