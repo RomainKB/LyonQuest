@@ -9,7 +9,7 @@
     </style>
 
 
-    <style name="FirstTheme" >
+    <style name="FirstTheme">
         <item name="android:background">@color/Background1</item>
         <item name="android:buttonStyle">@style/ButtonStyle1</item>
         <item name="android:textViewStyle">@style/TextStyle1</item>
@@ -21,7 +21,7 @@
 
     </style>
 
-    <style name="SecondTheme" >
+    <style name="SecondTheme">
         <item name="android:background">@color/Background2</item>
         <item name="android:buttonStyle">@style/ButtonStyle2</item>
         <item name="android:textViewStyle">@style/TextStyle2</item>
@@ -32,7 +32,7 @@
         <item name="android:textColorHighlight">@color/textBtnColor2</item>
     </style>
 
-    <style name="Thirdheme" >
+    <style name="Thirdheme">
         <item name="android:background">@color/Background3</item>
         <item name="android:buttonStyle">@style/ButtonStyle3</item>
         <item name="android:textViewStyle">@style/TextStyle3</item>
@@ -165,7 +165,14 @@
         <item name="android:typeface">serif</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

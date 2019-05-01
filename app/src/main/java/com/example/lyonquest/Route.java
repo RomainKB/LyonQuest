@@ -1,32 +1,34 @@
 package com.example.lyonquest;
 
+import java.io.Serializable;
+
 /**
  * Created by romaink on 01/05/2019.
  *
  * This class is the route class.
  */
-public class Route {
+public class Route implements Serializable {
 
     /**
      * The name of the route.
      */
-    private String mName;
+    public String mName;
     /**
      * The route description.
      */
-    private String mDescription;
+    public String mDescription;
     /**
      * The place where start the route.
      */
-    private String mStart;
+    public String mStart;
     /**
      * The score of the route.
      */
-    private int mNote;
+    public int mNote;
     /**
      * The average time to realise the route.
      */
-    private int mLength;
+    public int mLength;
 
     /**
      * Constructor of the class.
