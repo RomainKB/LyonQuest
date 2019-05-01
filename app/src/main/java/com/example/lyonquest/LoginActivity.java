@@ -3,13 +3,15 @@ package com.example.lyonquest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+
 
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -21,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,8 +34,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.Request.Method;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -73,6 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         Utils.onActivityCreateSetTheme(this);
         setContentView(R.layout.activity_login);
+
 
         // Check if the user was connected when he left the application. If yes, jump the login page.
         Boolean Check = Boolean.valueOf(SharedPrefs.readSharedSetting(LoginActivity.this, "USER", "false"));
@@ -326,6 +344,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private boolean reponse = false;
+
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -336,22 +356,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
+            JSONObject json = new JSONObject();
+            try {
+                json.put("email",mEmail);
+                json.put("password",mPassword);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url ="http://192.168.43.139:5000/lyon_quest/users/login/";
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                          //TODO : check "status" success ou failure
+                            try {
+                                String aJsonString = response.getString("status");
+                                if(aJsonString.equals("success")){
+                                    reponse = true;
+                                }else{
+                                    System.out.println("ppppfffff");
+                                    reponse = false;
+
+                                }
+                            }catch(JSONException e){e.printStackTrace();}
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("ERROR : "+error);
+                }
+            });
+            queue.add(jsonObjectRequest);
+
+/*
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
-            }
+            }*/
+
+
             // TODO : gérer si le compte n'existe pas.
-            return true;
+            return reponse;
         }
 
         @Override

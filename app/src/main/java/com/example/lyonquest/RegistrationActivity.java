@@ -27,6 +27,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -202,7 +212,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserRegistrationTask(email, password);
+            mAuthTask = new UserRegistrationTask(email, password, username);
             mAuthTask.execute((Void) null);
 
             Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
@@ -321,25 +331,56 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
         private final String mEmail;
         private final String mPassword;
+        private final String mUsername;
 
-        UserRegistrationTask(String email, String password) {
+        private boolean reponse = false;
+
+        UserRegistrationTask(String email, String password, String username) {
             mEmail = email;
             mPassword = password;
+            mUsername = username;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
+            JSONObject json = new JSONObject();
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                json.put("email",mEmail);
+                json.put("password",mPassword);
+                json.put("username",mUsername);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            String url ="http://192.168.43.139:5000/lyon_quest/users/register/";
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //TODO : check "status" success ou failure
+                            try {
+                                String aJsonString = response.getString("status");
+                                if(aJsonString.equals("success")){
+                                    reponse = true;
+                                }else{
+                                    System.out.println("ppppfffff");
+                                    reponse = false;
 
+                                }
+                            }catch(JSONException e){e.printStackTrace();}
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("ERROR : "+error);
+                }
+            });
+            queue.add(jsonObjectRequest);
             // TODO: register the new account here.
-            return true;
+            return reponse;
         }
 
         @Override
