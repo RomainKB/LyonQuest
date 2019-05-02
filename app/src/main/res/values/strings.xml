@@ -17,6 +17,7 @@
     <string name="error_invalid_password">Ce mot de passe est trop court</string>
     <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
     <string name="error_incorrect_password_confirmation">La confirmation ne correspond pas au mot de passe initial</string>
+    <string name="error_incorrect_identification">Ce couple mot de passe/email est incorrect</string>
     <string name="error_field_required">Veuillez completer ce champ</string>
     <string name="permission_rationale">"Pour l'auto-complétion de l'email nous avons besoin de cet accord."</string>
     <string name="title_activity_main">LyonQuest</string>

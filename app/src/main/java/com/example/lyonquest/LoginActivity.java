@@ -234,10 +234,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            SharedPrefs.saveSharedSetting(LoginActivity.this, "USER", "true");
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
         }
     }
 
@@ -354,8 +351,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
+/*
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -390,18 +386,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
             queue.add(jsonObjectRequest);
+*/
 
-/*
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                    reponse = pieces[1].equals(mPassword);
                 }
-            }*/
+            }
 
-
-            // TODO : gérer si le compte n'existe pas.
             return reponse;
         }
 
@@ -411,10 +405,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                SharedPrefs.saveSharedSetting(LoginActivity.this, "USER", "true");
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                mEmailView.setError(getString(R.string.error_incorrect_identification));
+                mEmailView.requestFocus();
+
             }
         }
 
