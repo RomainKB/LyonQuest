@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RiddleCreationActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RiddleCreationActivity"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/riddle_creation_activity_display_title"
+            style="@style/TitleStyleGene"
+            android:text="@string/riddle_creation_title"
+            tools:context=".RiddleCreationActivity"/>
+
+        <TextView
+            android:id="@+id/riddle_creation_ask_riddle_text"
+            style="@style/TextStyleGene"
+            android:text="@string/riddle_creation_ask_riddle_text"
+            tools:context=".RiddleCreationActivity"/>
+
+        <EditText
+            android:id="@+id/riddle_creation_riddle_text_edit"
+            style="@style/TextStyleGene"
+            tools:context=".RiddleCreationActivity"
+            />
+
+        <TextView
+            android:id="@+id/riddle_creation_ask_answer_riddle"
+            style="@style/TextStyleGene"
+            android:text="@string/riddle_creation_ask_riddle_answer"
+            tools:context=".RiddleCreationActivity"
+            />
+
+        <EditText
+            android:id="@+id/riddle_creation_answer_riddle_edit"
+            style="@style/TextStyleGene"
+            tools:context=".RiddleCreationActivity"
+            />
+
+        <Button
+            android:id="@+id/riddle_creation_finish_route_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/riddle_creation_next_riddle"
+            tools:context=".RiddleCreationActivity"
+            />
+
+        <Button
+            android:id="@+id/riddle_creation_next_riddle_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/riddle_creation_finish_route"
+            tools:context=".RiddleCreationActivity"
+            />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
