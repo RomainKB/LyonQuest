@@ -12,7 +12,7 @@ public class ThemeChange extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_theme_change);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
         int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
