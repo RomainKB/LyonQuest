@@ -2,6 +2,7 @@ package com.example.lyonquest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,9 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.onActivityCreateSetTheme(this);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
+        int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
+        Utils.onActivityCreateSetTheme(this,choice);
         setContentView(R.layout.activity_display_text_riddle);
 
         mTitle = (TextView) findViewById(R.id.activity_display_title);

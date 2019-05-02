@@ -13,6 +13,12 @@
         android:text="Settings" />
 
     <Button
+        android:id="@+id/change_theme"
+        style="@style/ButtonStyleGene"
+        android:text="@string/button_theme_change"
+        />
+
+    <Button
         android:id="@+id/sign_out_button"
         style="@style/ButtonStyleGene"
         android:text="@string/action_sign_out"

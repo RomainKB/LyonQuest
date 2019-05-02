@@ -27,6 +27,11 @@
     <string name="button_verification">Vérifier</string>
     <string name="button_give_up">Abandonner</string>
 
+    <!-- Strings related to the theme-->
+    <string name="set_theme">theme</string>
+    <string name="SHARED_PREFS">codeTheme</string>
+    <string name="button_theme_change">Changer de theme</string>
+
     <!-- Strings related to activity title-->
     <string name="title_route">Choix du parcours</string>
     <string name="title_add">Création parcours</string>
@@ -34,6 +39,7 @@
     <string name="title_activity_main">LyonQuest</string>
     <string name="title_activity_registration">Inscription</string>
     <string name="title_activity_route_detail">RouteDetail</string>
+    <string name="title_activity_theme_change">ThemeChange</string>
 
     <!-- Strings related to route creation -->
     <string name="add_routes_title">Création parcours</string>

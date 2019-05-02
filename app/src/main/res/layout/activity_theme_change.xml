@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ThemeChange">
+
+
+    <TextView
+        style="@style/TitleStyleGene"
+        android:text="Choisiser un thème :"
+        />
+    <Button
+        android:id="@+id/activity_theme_choice_button1"
+        style="@style/ButtonStyleGene"
+        android:text="Theme numéro 1" />
+
+    <Button
+        android:id="@+id/activity_theme_choice_button2"
+        style="@style/ButtonStyleGene"
+        android:text="Theme numéro 2" />
+
+    <Button android:id="@+id/activity_theme_choice_button3"
+        style="@style/ButtonStyleGene"
+        android:text="Theme numéro 3" />
+
+</LinearLayout>
