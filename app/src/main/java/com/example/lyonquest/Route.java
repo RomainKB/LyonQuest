@@ -10,6 +10,10 @@ import java.io.Serializable;
 public class Route implements Serializable {
 
     /**
+     * The id of the route.
+     */
+    public int mId;
+    /**
      * The name of the route.
      */
     public String mName;
@@ -34,8 +38,11 @@ public class Route implements Serializable {
      */
     public int mLength;
 
+
+
     /**
      * Constructor of the class.
+     * @param mId The id of the route.
      * @param mName The name of the route.
      * @param mDescription The route description.
      * @param mNote The note given by other users.
@@ -43,16 +50,22 @@ public class Route implements Serializable {
      * @param mNbTimeFinished The number of people who had finished the route.
      * @param mNbTimeAbandoned The number of people who had abandoned the route.
      */
-    public Route(String mName, String mDescription, int mNote, int mLength, int mNbTimeFinished, int mNbTimeAbandoned ) {
+    public Route(int mId, String mName, String mDescription, int mNote, int mLength, int mNbTimeFinished, int mNbTimeAbandoned ) {
         this.setmName(mName);
         this.setmDescription(mDescription);
         this.setmNote(mNote);
         this.setmLength(mLength);
         this.setmNbTimeFinished(mNbTimeFinished);
         this.setmNbTimeAbandoned(mNbTimeAbandoned);
+        this.setmId(mId);
     }
 
     /*-----------------Getter et setter--------------------------------- */
+
+    public int getmId() { return mId; }
+
+    public void setmId(int mId) { this.mId = mId; }
+
     public String getmName() {
         return mName;
     }

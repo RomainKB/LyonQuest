@@ -17,6 +17,18 @@
             style="@style/TitleStyleGene"
             android:text="PRB"
             />
+        <TextView
+            android:id="@+id/activity_display_description"
+            style="@style/TextStyleGene"
+            android:text="PRB"
+            />
+
+        <Button
+            android:id="@+id/start_route_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/action_start_route"
+            />
+
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
