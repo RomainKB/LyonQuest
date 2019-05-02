@@ -28,6 +28,19 @@
     <string name="title_add">Création parcours</string>
     <string name="title_settings">Paramètres</string>
 
+    <!-- Strings related to route creation -->
+    <string name="add_routes_title">Création parcours</string>
+    <string name="add_routes_ask_name_route">Nom du parcours :</string>
+    <string name="add_routes_ask_description_route">Description du parcours :</string>
+    <string name="add_routes_create_route">Créer parcours</string>
+
+    <!-- Strings related to route creation -->
+    <string name="riddle_creation_title">Création d\'énigme</string>
+    <string name="riddle_creation_ask_riddle_text">Texte de l\'énigme</string>
+    <string name="riddle_creation_ask_riddle_answer">Réponse de l\'énigme</string>
+    <string name="riddle_creation_next_riddle">Enigme suivante</string>
+    <string name="riddle_creation_finish_route">Finir le parcours</string>
+
 
     <string name="bottom_navigation_menu_left">Parcours</string>
     <string name="bottom_navigation_menu_middle">Création</string>

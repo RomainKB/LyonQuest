@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentAddRoutes">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".FragmentAddRoutes"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/add_routes_title"
+            style="@style/TitleStyleGene"
+            android:text="@string/add_routes_title"
+            tools:context=".FragmentAddRoutes"/>
+
+        <TextView
+            android:id="@+id/add_routes_ask_name_route"
+            style="@style/TextStyleGene"
+            android:text="@string/add_routes_ask_name_route"
+            tools:context=".FragmentAddRoutes"/>
+
+        <EditText
+            style="@style/TextStyleGene"
+            android:id="@+id/add_routes_name_route_edit"
+            tools:context=".FragmentAddRoutes"
+            />
+
+        <TextView
+            android:id="@+id/add_routes_ask_description_route"
+            style="@style/TextStyleGene"
+            android:text="@string/add_routes_ask_description_route"
+            tools:context=".FragmentAddRoutes"
+            />
+
+        <EditText
+            style="@style/TextStyleGene"
+            android:id="@+id/activity_display_name_description_edit"
+            tools:context=".FragmentAddRoutes"
+            />
+
+        <Button
+            android:id="@+id/create_route_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/add_routes_create_route"
+            tools:context=".FragmentAddRoutes"
+            />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
