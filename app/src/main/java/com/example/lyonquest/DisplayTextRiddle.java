@@ -31,6 +31,12 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
      * The button to check the answer.
      */
     private Button mCheck;
+    /**
+     * The button to give up the route.
+     */
+    private Button mGiveUp;
+
+
 
     private List<TextualRiddle> mRiddle = new ArrayList<>();
 
@@ -47,9 +53,12 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         mDescription = (TextView) findViewById(R.id.activity_display_description);
         mAnswer = (EditText) findViewById(R.id.riddle_text_answer);
         mCheck = (Button) findViewById(R.id.check_button);
+        mGiveUp = (Button) findViewById(R.id.give_up_button);
 
         mCheck.setTag(0);
+        mGiveUp.setTag(1);
         mCheck.setOnClickListener(this);
+        mGiveUp.setOnClickListener(this);
 
         // TODO : Delete this function call when we receive information from the server
         riddlelist();
@@ -84,9 +93,23 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     toast.show();
                 }
                 break;
+
+            case 1:
+                Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Context context = getApplicationContext();
+        CharSequence text = "Vous ne pouvez pas revenir en arrière désolé. Veuillez abandonner si vous souhaitez quitter le parcours.";
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 
     //TODO : a retirer quand le serveur nous donnera l'énigme
     private void riddlelist(){

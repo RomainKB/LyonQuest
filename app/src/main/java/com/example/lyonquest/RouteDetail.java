@@ -95,4 +95,10 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(RouteDetail.this, MainActivity.class);
+        startActivity(back);
+    }
 }

@@ -26,12 +26,20 @@
         <EditText
             android:id="@+id/riddle_text_answer"
             style="@style/EditTextStyleGene"
-            android:hint="Votre réponse"/>
+            android:hint="Votre réponse"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/check_button"
             style="@style/ButtonStyleGene"
             android:text="@string/button_verification"
+            />
+        <Button
+            android:id="@+id/give_up_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/button_give_up"
             />
 
 

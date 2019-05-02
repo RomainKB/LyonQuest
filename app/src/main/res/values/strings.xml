@@ -25,6 +25,7 @@
     <string name="action_start_route">C\'est parti</string>
     <string name="route_id">id</string>
     <string name="button_verification">Vérifier</string>
+    <string name="button_give_up">Abandonner</string>
 
     <!-- Strings related to activity title-->
     <string name="title_route">Choix du parcours</string>

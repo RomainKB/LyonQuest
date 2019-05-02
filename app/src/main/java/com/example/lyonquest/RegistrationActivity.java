@@ -393,5 +393,10 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             showProgress(false);
         }
     }
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(RegistrationActivity.this, LoginActivity.class);
+        startActivity(back);
+    }
 }
 

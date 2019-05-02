@@ -1,5 +1,6 @@
 package com.example.lyonquest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -50,4 +51,8 @@ public class MainActivity extends AppCompatActivity {
       //bottomNavigationView.getMenu().getItem(2).setChecked(true);
   }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }
