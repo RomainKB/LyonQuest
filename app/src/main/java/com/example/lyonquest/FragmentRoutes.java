@@ -71,9 +71,9 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
     }
     /* TODO : Méthode à remplacer par les infos venant du serveur */
     public void routesList(){
-         Route r1 = new Route("Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.","INSA de Lyon",4,120);
-         Route r2 = new Route("Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", "Place Bellecour",5,80);
-         Route r3 = new Route ("Hardcore","Vous aimez le challenge et courrir ? Go ! ", "Tête d'Or", 2, 35);
+         Route r1 = new Route("Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
+         Route r2 = new Route("Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
+         Route r3 = new Route ("Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
          mRoutes.add(r1);
          mRoutes.add(r2);
          mRoutes.add(r3);
