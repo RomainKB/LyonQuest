@@ -27,7 +27,7 @@ import java.util.List;
 
 public class FragmentRoutes extends Fragment implements View.OnClickListener {
 
-    private List<Route> mRoutes = new ArrayList<>();;
+    private List<Route> mRoutes = new ArrayList<>();
 
     public static FragmentRoutes newInstance() {
         FragmentRoutes fragment = new FragmentRoutes();

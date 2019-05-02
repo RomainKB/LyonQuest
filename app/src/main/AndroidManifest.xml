@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DisplayRiddle"></activity>
+        <activity android:name=".DisplayTextRiddle"></activity>
         <activity android:name=".RiddleCreationActivity" />
         <activity
             android:name=".RouteDetail"

@@ -12,31 +12,31 @@ public class Route implements Serializable {
     /**
      * The id of the route.
      */
-    public int mId;
+    private int mId;
     /**
      * The name of the route.
      */
-    public String mName;
+    private String mName;
     /**
      * The route description.
      */
-    public String mDescription;
+    private String mDescription;
     /**
      * The score of the route.
      */
-    public int mNote;
+    private int mNote;
     /**
      * The number of people who finished the route.
      */
-    public int mNbTimeFinished;
+    private int mNbTimeFinished;
     /**
      * The number of people who abandoned the route.
      */
-    public int mNbTimeAbandoned;
+    private int mNbTimeAbandoned;
     /**
      * The average time to realise the route.
      */
-    public int mLength;
+    private int mLength;
 
 
 

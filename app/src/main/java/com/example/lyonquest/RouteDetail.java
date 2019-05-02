@@ -1,26 +1,11 @@
 package com.example.lyonquest;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class RouteDetail extends AppCompatActivity implements View.OnClickListener{
 
@@ -36,7 +21,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
     /**
      * The button to start the route.
      */
-    private TextView mStart;
+    private Button mStart;
 
 
     @Override
@@ -82,7 +67,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                 try {
                                     String aJsonString = response.getString(getString(R.string.db_status));
                                     if(aJsonString.equals(getString(R.string.db_success))){
-                                        Intent intent = new Intent(RouteDetail.this, DisplayRiddle.class);
+                                        Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
                                         //TODO : récupérer l'énigme envoyé par le serveur pour la passer à la prochaine activité
 
                                         startActivity(intent);
@@ -105,7 +90,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                 });
                 queue.add(jsonObjectRequest); */
 
-                Intent intent = new Intent(RouteDetail.this, DisplayRiddle.class);
+                Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
                 startActivity(intent);
                 break;
         }
