@@ -22,6 +22,5 @@
             style="@style/ButtonStyleGene"
             android:id = "@+id/activity_display_routes_layoutOfDynamicContent">
         </LinearLayout>
-
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

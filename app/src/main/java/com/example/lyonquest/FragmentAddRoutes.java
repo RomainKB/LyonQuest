@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentAddRoutes extends Fragment {
+public class FragmentAddRoutes extends Fragment implements View.OnClickListener{
 
     public static FragmentAddRoutes newInstance() {
         FragmentAddRoutes fragment = new FragmentAddRoutes();
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +22,11 @@ public class FragmentAddRoutes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_fragment_add_routes, container, false);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
 
