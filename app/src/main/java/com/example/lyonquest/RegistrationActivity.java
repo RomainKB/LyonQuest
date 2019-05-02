@@ -43,7 +43,7 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
- * An activity where the user can creat an account.
+ * An activity where the user can create an account and sent it to the db.
  */
 public class RegistrationActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -51,8 +51,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -66,7 +64,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     private View mProgressView;
     private View mLoginFormView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +76,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordConfirmationView = (EditText) findViewById(R.id.password_confirmation);
-
 
         Button mRegistrationButton = (Button) findViewById(R.id.registration_button);
         mRegistrationButton.setOnClickListener(new OnClickListener() {
@@ -181,7 +177,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             cancel = true;
         }
 
-
         // Check for a valid username.
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_field_required));
@@ -214,9 +209,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             showProgress(true);
             mAuthTask = new UserRegistrationTask(email, password, username);
             mAuthTask.execute((Void) null);
-
-            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-            startActivity(intent);
         }
     }
 
@@ -294,7 +286,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
         addEmailsToAutoComplete(emails);
     }
 
@@ -333,7 +324,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         private final String mPassword;
         private final String mUsername;
 
-        private boolean reponse = false;
+        private boolean mAnswer = false;
 
         UserRegistrationTask(String email, String password, String username) {
             mEmail = email;
@@ -349,26 +340,24 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
 
             JSONObject json = new JSONObject();
             try {
-                json.put("email",mEmail);
-                json.put("password",mPassword);
-                json.put("username",mUsername);
+                json.put(getString(R.string.db_key_email),mEmail);
+                json.put(getString(R.string.db_key_password),mPassword);
+                json.put(getString(R.string.db_key_username),mUsername);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url ="http://192.168.43.139:5000/lyon_quest/users/register/";
+            String url =getString(R.string.db_registration_url);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             //TODO : check "status" success ou failure
                             try {
-                                String aJsonString = response.getString("status");
-                                if(aJsonString.equals("success")){
-                                    reponse = true;
+                                String aJsonString = response.getString(getString(R.string.db_status));
+                                if(aJsonString.equals(getString(R.string.db_success))){
+                                    mAnswer = true;
                                 }else{
-                                    System.out.println("ppppfffff");
-                                    reponse = false;
-
+                                    mAnswer = false;
                                 }
                             }catch(JSONException e){e.printStackTrace();}
                         }
@@ -379,8 +368,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                 }
             });
             queue.add(jsonObjectRequest);
-            // TODO: register the new account here.
-            return reponse;
+            return mAnswer;
         }
 
         @Override
@@ -389,6 +377,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             showProgress(false);
 
             if (success) {
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                startActivity(intent);
+
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

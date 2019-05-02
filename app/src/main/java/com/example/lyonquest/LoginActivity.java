@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
 
-        // Check if the user was connected when he left the application. If yes, jump the login page.
+        // Check if the user was connected when he left the application. If yes, jump to the login page.
         Boolean Check = Boolean.valueOf(SharedPrefs.readSharedSetting(LoginActivity.this, "USER", "false"));
         if(Check){
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (!mayRequestContacts()) {
             return;
         }
-
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -179,7 +178,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-
     /**
      * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -201,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+        // Check for a valid password.
         if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
@@ -233,8 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-
-
         }
     }
 
@@ -262,7 +258,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
-
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -285,12 +280,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Retrieve data rows for the device user's 'profile' contact.
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
                         ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
                 // Select only email addresses.
                 ContactsContract.Contacts.Data.MIMETYPE +
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
                 .CONTENT_ITEM_TYPE},
-
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
@@ -304,21 +297,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
         addEmailsToAutoComplete(emails);
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {    }
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
         mEmailView.setAdapter(adapter);
     }
 
@@ -328,7 +317,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
                 ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };
-
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
@@ -341,8 +329,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-        private boolean reponse = false;
 
+        private boolean mAnswer = false;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -357,25 +345,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             JSONObject json = new JSONObject();
             try {
-                json.put("email",mEmail);
-                json.put("password",mPassword);
+                json.put(getString(R.string.db_key_email),mEmail);
+                json.put(getString(R.string.db_key_password),mPassword);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url ="http://192.168.43.139:5000/lyon_quest/users/login/";
+            String url = getString(R.string.db_login_url);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                          //TODO : check "status" success ou failure
                             try {
-                                String aJsonString = response.getString("status");
-                                if(aJsonString.equals("success")){
-                                    reponse = true;
-                                }else{
-                                    System.out.println("ppppfffff");
-                                    reponse = false;
 
+                                String aJsonString = response.getString(getString(R.string.db_status));
+                                if(aJsonString.equals(getString(R.string.db_success))){
+                                    mAnswer = true;
+                                }else{
+                                    mAnswer = false;
                                 }
                             }catch(JSONException e){e.printStackTrace();}
                         }
@@ -387,16 +373,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             });
             queue.add(jsonObjectRequest);
 */
-
+            // TODO : Delete this loop when we connect to the server
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
-                    reponse = pieces[1].equals(mPassword);
+                    mAnswer = pieces[1].equals(mPassword);
                 }
             }
-
-            return reponse;
+            return mAnswer;
         }
 
         @Override
@@ -405,15 +390,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                SharedPrefs.saveSharedSetting(LoginActivity.this, "USER", "true");
-
+                SharedPrefs.saveSharedSetting(LoginActivity.this, getString(R.string.user) , "true");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             } else {
                 mEmailView.setError(getString(R.string.error_incorrect_identification));
                 mEmailView.requestFocus();
-
             }
         }
 

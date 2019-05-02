@@ -18,13 +18,17 @@ public class Route implements Serializable {
      */
     public String mDescription;
     /**
-     * The place where start the route.
-     */
-    public String mStart;
-    /**
      * The score of the route.
      */
     public int mNote;
+    /**
+     * The number of people who finished the route.
+     */
+    public int mNbTimeFinished;
+    /**
+     * The number of people who abandoned the route.
+     */
+    public int mNbTimeAbandoned;
     /**
      * The average time to realise the route.
      */
@@ -34,16 +38,18 @@ public class Route implements Serializable {
      * Constructor of the class.
      * @param mName The name of the route.
      * @param mDescription The route description.
-     * @param mStart The place whhere start the route.
      * @param mNote The note given by other users.
-     * @param mLength The average length of the route
+     * @param mLength The average length of the route.
+     * @param mNbTimeFinished The number of people who had finished the route.
+     * @param mNbTimeAbandoned The number of people who had abandoned the route.
      */
-    public Route(String mName, String mDescription, String mStart, int mNote, int mLength) {
+    public Route(String mName, String mDescription, int mNote, int mLength, int mNbTimeFinished, int mNbTimeAbandoned ) {
         this.setmName(mName);
         this.setmDescription(mDescription);
-        this.setmStart(mStart);
         this.setmNote(mNote);
         this.setmLength(mLength);
+        this.setmNbTimeFinished(mNbTimeFinished);
+        this.setmNbTimeAbandoned(mNbTimeAbandoned);
     }
 
     /*-----------------Getter et setter--------------------------------- */
@@ -71,14 +77,6 @@ public class Route implements Serializable {
         this.mDescription = mDescription;
     }
 
-    public String getmStart() {
-        return mStart;
-    }
-
-    public void setmStart(String mStart) {
-        this.mStart = mStart;
-    }
-
     public int getmNote() {
         return mNote;
     }
@@ -86,4 +84,12 @@ public class Route implements Serializable {
     public void setmNote(int mNote) {
         this.mNote = mNote;
     }
+
+    public int getmNbTimeFinished() { return mNbTimeFinished; }
+
+    public void setmNbTimeFinished(int mNbTimeFinished) { this.mNbTimeFinished = mNbTimeFinished; }
+
+    public int getmNbTimeAbandoned() { return mNbTimeAbandoned; }
+
+    public void setmNbTimeAbandoned(int mNbTimeAbandoned) { this.mNbTimeAbandoned = mNbTimeAbandoned; }
 }

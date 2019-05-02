@@ -11,14 +11,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       Utils.onActivityCreateSetTheme(this);
       setContentView(R.layout.activity_main);
-      BottomNavigationView bottomNavigationView = (BottomNavigationView)
-              findViewById(R.id.navigation);
+      BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
 
       bottomNavigationView.setOnNavigationItemSelectedListener
               (new BottomNavigationView.OnNavigationItemSelectedListener() {
