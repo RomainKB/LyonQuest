@@ -32,7 +32,7 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
 
-        // TODO : Delete this function call when we receive informations from the server
+        // TODO : Delete this function call when we receive information from the server
         routesList();
 
         /*Get back the layout*/
