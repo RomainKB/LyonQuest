@@ -368,7 +368,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 }else{
                                     mAnswer = false;
                                 }
-                                verification(mAnswer);
+                                verification(mAnswer, mEmail);
                             }catch(JSONException e){e.printStackTrace();}
                         }
                     }, new Response.ErrorListener() {
@@ -379,14 +379,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             });
             queue.add(jsonObjectRequest);
 
-        /*    // TODO : Delete this loop when we connect to the server
+          /* // TODO : Delete this loop when we connect to the server
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     mAnswer = pieces[1].equals(mPassword);
                 }
-            }*/
+            }
+            verification(mAnswer, mEmail);*/
             return mAnswer;
         }
 
@@ -408,9 +409,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    private void verification(boolean success){
+    private void verification(boolean success,String mEmail){
         if (success) {
             SharedPrefs.saveSharedSetting(LoginActivity.this, getString(R.string.user) , "true");
+            SharedPrefs.saveSharedSetting(LoginActivity.this, getString(R.string.email) , mEmail);
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -47,7 +47,8 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
 
 
         // TODO : Delete this function call when we receive information from the server
-        //routesList();
+       /*routesList();
+        construction(view);*/
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         //TODO : Penser à rentrer le bon url

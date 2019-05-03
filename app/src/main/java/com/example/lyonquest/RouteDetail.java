@@ -64,38 +64,41 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
 
         switch(responseIndex) {
             case 0:
+                final String email = SharedPrefs.readSharedSetting(RouteDetail.this, getString(R.string.email), null);
+
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
                     json.put(getString(R.string.route_id),route.getmId());
-                    //penser à envoyer le mail
+                    json.put(getString(R.string.email),email);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 //TODO : Penser à rentrer le bon url
-                String url = getString(R.string.db_login_url);
+                String url = getString(R.string.db_start_route);
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    String aJsonString = response.getString(getString(R.string.db_status));
-                                    if(aJsonString.equals(getString(R.string.db_success))){
-                                        Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
-                                        //TODO : récupérer l'énigme envoyé par le serveur pour la passer à la prochaine activité et type enigme
-
-                                        startActivity(intent);
-                                    }else{
-                                        Context context = getApplicationContext();
-                                        CharSequence text = "Problème de connexion avec le serveur";
-                                        int duration = Toast.LENGTH_LONG;
-
-                                        Toast toast = Toast.makeText(context, text, duration);
-                                        toast.show();
-
+                                    System.out.println(response);
+                                    Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
+                                    String type = response.getString(getString(R.string.db_key_type));
+                                    switch (type){
+                                        case "password":
+                                            TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable(getString(R.string.riddle),r1);
+                                            System.out.println(r1.getmDescription());
+                                            bundle.putSerializable(getString(R.string.route),route);
+                                            intent.putExtras(bundle);
+                                            break;
                                     }
+                                        startActivity(intent);
+
                                 }catch(JSONException e){e.printStackTrace();}
                             }
                         }, new Response.ErrorListener() {
@@ -106,8 +109,8 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                 });
                 queue.add(jsonObjectRequest);
 
-                Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
-                startActivity(intent);
+               /* Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
+                startActivity(intent);*/
                 break;
         }
     }

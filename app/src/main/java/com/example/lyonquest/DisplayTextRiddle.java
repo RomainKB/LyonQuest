@@ -11,6 +11,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +55,10 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
     //TODO : a retirer quand le serveur nous donnera l'énigme
     public static int enigmeNum = 0;
 
+    private Riddle riddle;
+    private Route route;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,16 +78,27 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         mCheck.setOnClickListener(this);
         mGiveUp.setOnClickListener(this);
 
-        // TODO : Delete this function call when we receive information from the server
+
+
+        riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
+
+        System.out.println(riddle.getmDescription());
+
+
+
+       /* // TODO : Delete this function call when we receive information from the server
         riddlelist();
         //TODO : récupérer l'énigme passée par le intent.
-
         mTitle.setText(mRiddle.get(enigmeNum).getmTitle());
-        mDescription.setText(mRiddle.get(enigmeNum).getmDescription());
+        mDescription.setText(mRiddle.get(enigmeNum).getmDescription()); */
+        mTitle.setText(riddle.getmTitle());
+        mDescription.setText(riddle.getmDescription());
+
+
+
     }
-    //TODO il faudra totalement revoir cette fonction avec l'envoie des énigmes par le serveur.
-    // Vérifier avec serveur réponse, puis passer en intent la prochaine énigme.
-    // Que nous envoi le serveur pour dire que c'est fini ?
+
     @Override
     public void onClick(View v) {
         int responseIndex = (int) v.getTag();
@@ -80,7 +106,8 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         switch(responseIndex) {
             case 0:
 
-                if(enigmeNum == mRiddle.size()-1){
+                final String email = SharedPrefs.readSharedSetting(DisplayTextRiddle.this, getString(R.string.email), null);
+                /*if(enigmeNum == mRiddle.size()-1){
                     enigmeNum = 0;
                     Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
                     startActivity(intent);
@@ -94,7 +121,70 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
+                }*/
+
+                String solution = mAnswer.getText().toString();
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+                JSONObject json = new JSONObject();
+                try {
+                    json.put(getString(R.string.route_id),route.getmId());
+                    json.put(getString(R.string.email),email);
+                    json.put(getString(R.string.db_key_textual_solution),solution);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                //TODO : Penser à rentrer le bon url
+                String url = getString(R.string.db_verification);
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+
+                                    String aJsonString = response.getString(getString(R.string.db_status));
+                                    if(aJsonString.equals(getString(R.string.db_success))){
+
+                                        String end = response.getString(getString(R.string.db_end));
+
+                                        if(end.equals(getString(R.string.db_fini))){
+                                            //Cas ou l'utilisateur a fini le parcours
+
+                                            Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
+                                            //TODO: Penser à afficher à l'utilisateur fini
+                                            startActivity(intent);
+                                        }else {
+                                            //Cas ou l'utilisateur a valider l'énigme mais pas fini le parcours
+
+                                            Intent intent = new Intent(DisplayTextRiddle.this, DisplayTextRiddle.class);
+                                            JSONObject rid = new JSONObject(response.getString("riddle"));
+                                            TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable(getString(R.string.riddle),r1);
+                                            bundle.putSerializable(getString(R.string.route),route);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                        }
+                                    }else{
+                                        //Cas ou l'utilisateur a donné une mauvaise réponse
+
+                                        Context context = getApplicationContext();
+                                        CharSequence text = "La réponse n'est pas correct, veuillez ressayer.";
+                                        int duration = Toast.LENGTH_LONG;
+                                        Toast toast = Toast.makeText(context, text, duration);
+                                        toast.show();
+                                    }
+
+                                }catch(JSONException e){e.printStackTrace();}
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("ERROR : "+error);
+                    }
+                });
+                queue.add(jsonObjectRequest);
                 break;
 
             case 1:
