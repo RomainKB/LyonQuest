@@ -362,6 +362,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
                                 }else{
                                     mAnswer = false;
                                 }
+                                verification(mAnswer);
                             }catch(JSONException e){e.printStackTrace();}
                         }
                     }, new Response.ErrorListener() {
@@ -378,16 +379,6 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                startActivity(intent);
-
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
         }
 
         @Override
@@ -400,6 +391,17 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     public void onBackPressed() {
         Intent back = new Intent(RegistrationActivity.this, LoginActivity.class);
         startActivity(back);
+    }
+
+    private void verification(boolean success){
+        if (success) {
+            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            mPasswordView.setError("Erreur serveur inscription");
+            mPasswordView.requestFocus();
+        }
     }
 }
 

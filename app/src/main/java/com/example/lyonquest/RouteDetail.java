@@ -1,5 +1,6 @@
 package com.example.lyonquest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RouteDetail extends AppCompatActivity implements View.OnClickListener{
 
@@ -52,16 +64,18 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
 
         switch(responseIndex) {
             case 0:
-               /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
                     json.put(getString(R.string.route_id),route.getmId());
+                    //penser à envoyer le mail
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 //TODO : Penser à rentrer le bon url
                 String url = getString(R.string.db_login_url);
+
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -70,7 +84,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                     String aJsonString = response.getString(getString(R.string.db_status));
                                     if(aJsonString.equals(getString(R.string.db_success))){
                                         Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
-                                        //TODO : récupérer l'énigme envoyé par le serveur pour la passer à la prochaine activité
+                                        //TODO : récupérer l'énigme envoyé par le serveur pour la passer à la prochaine activité et type enigme
 
                                         startActivity(intent);
                                     }else{
@@ -90,7 +104,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                         System.out.println("ERROR : "+error);
                     }
                 });
-                queue.add(jsonObjectRequest); */
+                queue.add(jsonObjectRequest);
 
                 Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
                 startActivity(intent);

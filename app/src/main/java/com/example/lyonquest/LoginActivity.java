@@ -335,6 +335,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
 
         private boolean mAnswer = false;
+        private boolean mWait = true;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -343,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-/*
+
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -367,6 +368,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 }else{
                                     mAnswer = false;
                                 }
+                                verification(mAnswer);
                             }catch(JSONException e){e.printStackTrace();}
                         }
                     }, new Response.ErrorListener() {
@@ -376,32 +378,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
             queue.add(jsonObjectRequest);
-*/
-            // TODO : Delete this loop when we connect to the server
+
+        /*    // TODO : Delete this loop when we connect to the server
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     mAnswer = pieces[1].equals(mPassword);
                 }
-            }
+            }*/
             return mAnswer;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                SharedPrefs.saveSharedSetting(LoginActivity.this, getString(R.string.user) , "true");
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                mEmailView.setError(getString(R.string.error_incorrect_identification));
-                mEmailView.requestFocus();
-            }
         }
 
         @Override
@@ -414,6 +406,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void onBackPressed() {
 
+    }
+
+    private void verification(boolean success){
+        if (success) {
+            SharedPrefs.saveSharedSetting(LoginActivity.this, getString(R.string.user) , "true");
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            mEmailView.setError(getString(R.string.error_incorrect_identification));
+            mEmailView.requestFocus();
+        }
     }
 }
 

@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,31 +43,29 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
+        final View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
 
 
         // TODO : Delete this function call when we receive information from the server
-        routesList();
+        //routesList();
 
-        /*RequestQueue queue = Volley.newRequestQueue(getContext());
+        RequestQueue queue = Volley.newRequestQueue(getContext());
         //TODO : Penser à rentrer le bon url
-        String url = getString(R.string.db_login_url);
+        String url = getString(R.string.db_routes_list);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    String aJsonString = response.getString(getString(R.string.db_status));
-                    if(aJsonString.equals(getString(R.string.db_success))){
-                        //TODO : récupérer la liste des parcours et en créer une liste pour l'afficher
-                    }else{
-                        Context context = getContext();
-                        CharSequence text = "Problème de connexion avec le serveur";
-                        int duration = Toast.LENGTH_LONG;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
 
+                try {
+                JSONArray array = new JSONArray(response.getString("routes"));
+                    for (int i = 0; i < array.length(); i++) {
+                        // On récupère un objet JSON du tableau
+                        JSONObject obj = new JSONObject(array.getString(i));
+                        Route route = new Route(obj.getInt("route_id"),obj.getString("title"),obj.getString("description"),0,0,0,0);
+                        mRoutes.add(route);
                     }
+                    construction(view);
                 }catch(JSONException e){e.printStackTrace();}
             }
             }, new Response.ErrorListener() {
@@ -75,8 +74,33 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                 System.out.println("ERROR : "+error);
             }
         });
-        queue.add(getRequest);*/
+        queue.add(getRequest);
 
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        // Get back the tag button to know which route the user selected
+        int responseIndex = (int) v.getTag();
+
+        Intent intent = new Intent(getActivity(), RouteDetail.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(getString(R.string.route),mRoutes.get(responseIndex));
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+    /* TODO : Méthode à remplacer par les infos venant du serveur */
+    private void routesList(){
+         Route r1 = new Route(1,"Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
+         Route r2 = new Route(2,"Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
+         Route r3 = new Route (3,"Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
+         mRoutes.add(r1);
+         mRoutes.add(r2);
+         mRoutes.add(r3);
+    }
+
+    private void construction(View view){
         /*Get back the layout*/
         LinearLayout monLayout = (LinearLayout) view.findViewById(R.id.activity_display_routes_layoutOfDynamicContent);
 
@@ -97,27 +121,5 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
             espace.setHeight(20);
             monLayout.addView(espace,0);
         }
-        return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        // Get back the tag button to know which route the user selected
-        int responseIndex = (int) v.getTag();
-
-        Intent intent = new Intent(getActivity(), RouteDetail.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(getString(R.string.route),mRoutes.get(responseIndex));
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-    /* TODO : Méthode à remplacer par les infos venant du serveur */
-    public void routesList(){
-         Route r1 = new Route(1,"Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
-         Route r2 = new Route(2,"Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
-         Route r3 = new Route (3,"Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
-         mRoutes.add(r1);
-         mRoutes.add(r2);
-         mRoutes.add(r3);
     }
 }

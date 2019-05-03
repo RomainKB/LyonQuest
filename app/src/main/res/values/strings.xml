@@ -64,6 +64,7 @@
     <!-- Strings related to DB -->
     <string name="db_login_url">http://192.168.43.139:5000/lyon_quest/users/login/</string>
     <string name="db_registration_url">http://192.168.43.139:5000/lyon_quest/users/register/</string>
+    <string name="db_routes_list">http://192.168.43.139:5000/lyon_quest/game/routes/</string>
     <string name="db_status">status</string>
     <string name="db_success">success</string>
     <string name="db_key_email">email</string>
