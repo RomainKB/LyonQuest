@@ -1,5 +1,6 @@
 package com.example.lyonquest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -9,13 +10,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentRoutes extends Fragment implements View.OnClickListener {
 
-    private List<Route> mRoutes = new ArrayList<>();;
+    private List<Route> mRoutes = new ArrayList<>();
 
     public static FragmentRoutes newInstance() {
         FragmentRoutes fragment = new FragmentRoutes();
@@ -32,8 +44,38 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
 
-        // TODO : Delete this function call when we receive informations from the server
+
+        // TODO : Delete this function call when we receive information from the server
         routesList();
+
+        /*RequestQueue queue = Volley.newRequestQueue(getContext());
+        //TODO : Penser à rentrer le bon url
+        String url = getString(R.string.db_login_url);
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String aJsonString = response.getString(getString(R.string.db_status));
+                    if(aJsonString.equals(getString(R.string.db_success))){
+                        //TODO : récupérer la liste des parcours et en créer une liste pour l'afficher
+                    }else{
+                        Context context = getContext();
+                        CharSequence text = "Problème de connexion avec le serveur";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+                    }
+                }catch(JSONException e){e.printStackTrace();}
+            }
+            }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("ERROR : "+error);
+            }
+        });
+        queue.add(getRequest);*/
 
         /*Get back the layout*/
         LinearLayout monLayout = (LinearLayout) view.findViewById(R.id.activity_display_routes_layoutOfDynamicContent);
@@ -71,9 +113,9 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
     }
     /* TODO : Méthode à remplacer par les infos venant du serveur */
     public void routesList(){
-         Route r1 = new Route("Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
-         Route r2 = new Route("Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
-         Route r3 = new Route ("Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
+         Route r1 = new Route(1,"Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
+         Route r2 = new Route(2,"Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
+         Route r3 = new Route (3,"Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
          mRoutes.add(r1);
          mRoutes.add(r2);
          mRoutes.add(r3);

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class FragmentSettings extends Fragment {
+public class FragmentSettings extends Fragment implements View.OnClickListener{
 
     public static FragmentSettings newInstance() {
         FragmentSettings fragment = new FragmentSettings();
@@ -27,17 +27,39 @@ public class FragmentSettings extends Fragment {
         View view =  inflater.inflate(R.layout.activity_fragment_settings, container, false);
 
         Button button =(Button)view.findViewById(R.id.sign_out_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button1 =(Button)view.findViewById(R.id.change_theme);
+        button.setTag(0);
+        button1.setTag(1);
 
-            @Override
-            public void onClick(View v) {
+        button.setOnClickListener(this);
+        button1.setOnClickListener(this);
+
+        return view;
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        // Get back the tag button to know which route the user selected
+        int responseIndex = (int) v.getTag();
+
+        switch(responseIndex) {
+
+            case 0:
                 SharedPrefs.saveSharedSetting(getActivity(), "USER", "false");
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                break;
 
-            }
-        });
-        return view;
+            case 1:
+                Intent intent1 = new Intent(getActivity(), ThemeChange.class);
+                System.out.println("je suis la");
+                startActivity(intent1);
 
+                break;
+
+
+
+        }
     }
 }

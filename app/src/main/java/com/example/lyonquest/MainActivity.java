@@ -1,5 +1,7 @@
 package com.example.lyonquest;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      Utils.onActivityCreateSetTheme(this);
+      SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
+      int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
+      Utils.onActivityCreateSetTheme(this,choice);
       setContentView(R.layout.activity_main);
       BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
 
@@ -50,4 +54,8 @@ public class MainActivity extends AppCompatActivity {
       //bottomNavigationView.getMenu().getItem(2).setChecked(true);
   }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 }

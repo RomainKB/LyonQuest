@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RouteDetail">
+    tools:context=".DisplayTextRiddle">
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".RouteDetail">
+        tools:context=".DisplayTextRiddle">
 
         <TextView
             android:id="@+id/activity_display_title"
@@ -23,10 +23,23 @@
             android:text="PRB"
             />
 
+        <EditText
+            android:id="@+id/riddle_text_answer"
+            style="@style/EditTextStyleGene"
+            android:hint="Votre réponse"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="text"/>
+
         <Button
-            android:id="@+id/start_route_button"
+            android:id="@+id/check_button"
             style="@style/ButtonStyleGene"
-            android:text="@string/action_start_route"
+            android:text="@string/button_verification"
+            />
+        <Button
+            android:id="@+id/give_up_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/button_give_up"
             />
 
 

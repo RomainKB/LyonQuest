@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -67,7 +68,9 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.onActivityCreateSetTheme(this);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
+        int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
+        Utils.onActivityCreateSetTheme(this,choice);
         setContentView(R.layout.activity_registration);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -392,6 +395,11 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             mAuthTask = null;
             showProgress(false);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent back = new Intent(RegistrationActivity.this, LoginActivity.class);
+        startActivity(back);
     }
 }
 

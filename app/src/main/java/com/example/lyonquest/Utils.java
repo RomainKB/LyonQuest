@@ -45,5 +45,24 @@ public class Utils {
                 break;
         }
     }
+
+    /**
+     * Set the theme of the activity, according to the configuration.
+     */
+    public static void onActivityCreateSetTheme(Activity activity, int choice) {
+
+        switch (choice-1) {
+            default:
+            case THEME_ONE:
+                activity.setTheme(R.style.FirstTheme);
+                break;
+            case THEME_TWO:
+                activity.setTheme(R.style.SecondTheme);
+                break;
+            case THEME_THREE:
+                activity.setTheme(R.style.Thirdheme);
+                break;
+        }
+    }
 }
 
