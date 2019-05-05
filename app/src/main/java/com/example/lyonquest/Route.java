@@ -1,6 +1,12 @@
 package com.example.lyonquest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by romaink on 01/05/2019.
@@ -38,7 +44,7 @@ public class Route implements Serializable {
      */
     private int mLength;
 
-
+    private ArrayList<Riddle> riddles;
 
     /**
      * Constructor of the class.
@@ -58,6 +64,37 @@ public class Route implements Serializable {
         this.setmNbTimeFinished(mNbTimeFinished);
         this.setmNbTimeAbandoned(mNbTimeAbandoned);
         this.setmId(mId);
+        this.riddles = new ArrayList<>();
+    }
+
+    public Route(){
+        this.mId = 0;
+        this.mName = null;
+        this.mDescription = null;
+        this.mNote = 0;
+        this.mLength = 0;
+        this.mNbTimeAbandoned = 0;
+        this.mNbTimeFinished = 0;
+        this.riddles = new ArrayList<>();
+    }
+
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+        JSONArray riddlesJson = new JSONArray();
+
+        try {
+            json.put("description", mDescription);
+            json.put("name", mName);
+
+            for (Riddle riddle: riddles) {
+                riddlesJson.put(riddle.toJSON());
+            }
+            json.put("riddles", riddlesJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 
     /*-----------------Getter et setter--------------------------------- */
@@ -105,4 +142,12 @@ public class Route implements Serializable {
     public int getmNbTimeAbandoned() { return mNbTimeAbandoned; }
 
     public void setmNbTimeAbandoned(int mNbTimeAbandoned) { this.mNbTimeAbandoned = mNbTimeAbandoned; }
+
+    public ArrayList<Riddle> getRiddles() {
+        return riddles;
+    }
+
+    public void setRiddles(ArrayList<Riddle> riddles) {
+        this.riddles = riddles;
+    }
 }

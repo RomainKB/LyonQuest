@@ -40,7 +40,7 @@
 
         <EditText
             style="@style/TextStyleGene"
-            android:id="@+id/activity_display_name_description_edit"
+            android:id="@+id/add_routes_description_route_edit"
             tools:context=".FragmentAddRoutes"
             />
 

@@ -1,5 +1,8 @@
 package com.example.lyonquest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class TextualRiddle extends Riddle {
 
     /**
@@ -22,5 +25,19 @@ public class TextualRiddle extends Riddle {
 
     public void setmSolution(String mSolution) {
         this.mSolution = mSolution;
+    }
+
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("text", mDescription);
+            json.put("solution", mSolution);
+            json.put("type","password");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 }
