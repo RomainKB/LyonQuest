@@ -78,19 +78,19 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
 
 
 
-       /* riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
-        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));*/
+        riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
 
 
-        // TODO : Delete this function call when we receive information from the server
+       /* // TODO : Delete this function call when we receive information from the server
         riddlelist();
         //TODO : récupérer l'énigme passée par le intent.
         mTitle.setText(mRiddle.get(enigmeNum).getmTitle());
-        mDescription.setText(mRiddle.get(enigmeNum).getmDescription());
+        mDescription.setText(mRiddle.get(enigmeNum).getmDescription());*/
 
 
-       /* mTitle.setText(riddle.getmTitle());
-        mDescription.setText(riddle.getmDescription());*/
+        mTitle.setText(riddle.getmTitle());
+        mDescription.setText(riddle.getmDescription());
 
     }
 
@@ -104,7 +104,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                 final String email = SharedPrefs.readSharedSetting(DisplayTextRiddle.this, getString(R.string.email), null);
 
 
-                if(enigmeNum == mRiddle.size()-1){
+               /* if(enigmeNum == mRiddle.size()-1){
                     enigmeNum = 0;
                     Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
                     startActivity(intent);
@@ -118,9 +118,9 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                }
+                }*/
 
-               /* String solution = mAnswer.getText().toString();
+                String solution = mAnswer.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
@@ -133,7 +133,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                 }
                 //TODO : Penser à rentrer le bon url
                 String url = getString(R.string.db_verification);
-
+                System.out.println(json);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -148,17 +148,18 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                         if(end.equals(getString(R.string.db_fini))){
                                             //Cas ou l'utilisateur a fini le parcours
 
-                                            Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
-                                            //TODO: Penser à afficher à l'utilisateur fini
-                                            startActivity(intent);
+                                            Intent intent0 = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
+                                            Bundle bundle0 = new Bundle();
+                                            bundle0.putSerializable(getString(R.string.route),route);
+                                            intent0.putExtras(bundle0);
+                                            startActivity(intent0);
                                         }else {
                                             //Cas ou l'utilisateur a valider l'énigme mais pas fini le parcours
                                             String type = response.getString(getString(R.string.db_key_type));
 
                                             switch (type){
                                                 case "password":
-                                                    Intent intent1 = new Intent(DisplayDestinationRiddle.this, DisplayTextRiddle.class);
-                                                    JSONObject rid = new JSONObject(response.getString("riddle"));
+                                                    Intent intent1 = new Intent(DisplayTextRiddle.this, DisplayTextRiddle.class);
                                                     TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
                                                     Bundle bundle1 = new Bundle();
                                                     bundle1.putSerializable(getString(R.string.riddle),r1);
@@ -168,7 +169,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                                     break;
 
                                                 case "destination":
-                                                    Intent intent2 = new Intent(DisplayDestinationRiddle.this, DisplayDestinationRiddle.class);
+                                                    Intent intent2 = new Intent(DisplayTextRiddle.this, DisplayDestinationRiddle.class);
                                                     Riddle r2 = new Riddle("Enigme", response.getString(getString(R.string.db_key_description)));
                                                     Bundle bundle2 = new Bundle();
                                                     bundle2.putSerializable(getString(R.string.riddle),r2);
@@ -198,7 +199,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     }
                 });
                 queue.add(jsonObjectRequest);
-                */
+
                 break;
 
             case 1:

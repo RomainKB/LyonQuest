@@ -48,7 +48,6 @@ public class UserProfil extends AppCompatActivity {
         mRank = (TextView) findViewById(R.id.activity_display_rank);
         mRouteNumber = (TextView) findViewById(R.id.activity_display_route_numbers);
 
-
         String email = SharedPrefs.readSharedSetting(this, getString(R.string.email), null);
         mEmail.setText(email);
 
@@ -72,7 +71,6 @@ public class UserProfil extends AppCompatActivity {
                                     String username = response.getString(getString(R.string.db_key_username));
                                     String rank = response.getString(getString(R.string.db_key_rank));
                                     String routeNumber = response.getString(getString(R.string.db_key_route_number));
-
 
                                     mUsername.setText(username);
                                     mRank.setText(rank);

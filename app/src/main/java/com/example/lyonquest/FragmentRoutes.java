@@ -46,12 +46,11 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
         final View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
 
 
-        // TODO : Delete this function call when we receive information from the server
+       /* // TODO : Delete this function call when we receive information from the server
        routesList();
-        construction(view);
+        construction(view);*/
 
-       /* RequestQueue queue = Volley.newRequestQueue(getContext());
-        //TODO : Penser à rentrer le bon url
+        RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = getString(R.string.db_routes_list);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -63,7 +62,7 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                     for (int i = 0; i < array.length(); i++) {
                         // On récupère un objet JSON du tableau
                         JSONObject obj = new JSONObject(array.getString(i));
-                        Route route = new Route(obj.getInt("route_id"),obj.getString("title"),obj.getString("description"),0,0,0,0);
+                        Route route = new Route(obj.getInt("route_id"),obj.getString("title"),obj.getString("description"),obj.getInt("avg_rating"),0,obj.getInt("number_of_votes"),0);
                         mRoutes.add(route);
                     }
                     construction(view);
@@ -75,7 +74,7 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                 System.out.println("ERROR : "+error);
             }
         });
-        queue.add(getRequest);*/
+        queue.add(getRequest);
 
         return view;
     }

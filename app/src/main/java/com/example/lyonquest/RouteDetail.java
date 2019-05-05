@@ -32,6 +32,14 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
      */
     private TextView mDescription;
     /**
+     * The text view where we display the route score
+     */
+    private TextView mScore;
+    /**
+     * The text view where we display the route nb finished
+     */
+    private TextView mFinished;
+    /**
      * The button to start the route.
      */
     private Button mStart;
@@ -49,10 +57,15 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
 
         mTitle = (TextView) findViewById(R.id.activity_display_title);
         mDescription = (TextView) findViewById(R.id.activity_display_description);
+        mScore = (TextView) findViewById(R.id.activity_display_score);
+        mFinished = (TextView) findViewById(R.id.activity_display_nb_finished);
         mStart = (Button) findViewById(R.id.start_route_button);
 
         mTitle.setText(route.getmName());
         mDescription.setText(route.getmDescription());
+        mScore.setText("Score : "+Integer.toString(route.getmNote()));
+        mFinished.setText("Nombre de fois fini : "+Integer.toString(route.getmNbTimeFinished()));
+
         mStart.setTag(0);
         mStart.setOnClickListener(this);
 
@@ -66,7 +79,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
             case 0:
                 final String email = SharedPrefs.readSharedSetting(RouteDetail.this, getString(R.string.email), null);
 
-               /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
@@ -93,7 +106,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                             Bundle bundle1 = new Bundle();
                                             bundle1.putSerializable(getString(R.string.riddle),r1);
                                             bundle1.putSerializable(getString(R.string.route),route);
-                                            intent.putExtras(bundle1);
+                                            intent1.putExtras(bundle1);
                                             startActivity(intent1);
                                             break;
 
@@ -103,7 +116,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                             Bundle bundle2 = new Bundle();
                                             bundle2.putSerializable(getString(R.string.riddle),r2);
                                             bundle2.putSerializable(getString(R.string.route),route);
-                                            intent.putExtras(bundle2);
+                                            intent2.putExtras(bundle2);
                                             startActivity(intent2);
                                             break;
 
@@ -118,10 +131,10 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                         System.out.println("ERROR : "+error);
                     }
                 });
-                queue.add(jsonObjectRequest);*/
+                queue.add(jsonObjectRequest);
 
-                Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
-                startActivity(intent);
+                /*Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
+                startActivity(intent);*/
                 break;
         }
     }

@@ -345,7 +345,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-          /*  // Instantiate the RequestQueue.
+          // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
             JSONObject json = new JSONObject();
@@ -377,9 +377,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     System.out.println("ERROR : "+error);
                 }
             });
-            queue.add(jsonObjectRequest);*/
+            queue.add(jsonObjectRequest);
 
-          // TODO : Delete this loop when we connect to the server
+         /* // TODO : Delete this loop when we connect to the server
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
@@ -387,7 +387,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     mAnswer = pieces[1].equals(mPassword);
                 }
             }
-            verification(mAnswer, mEmail);
+            verification(mAnswer, mEmail);*/
             return mAnswer;
         }
 

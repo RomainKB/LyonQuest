@@ -35,6 +35,8 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
      */
     private Button mValidation;
 
+    private Route route;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,9 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         mValidation.setTag(0);
         mValidation.setOnClickListener(this);
 
+        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
+
+
     }
 
     @Override
@@ -59,23 +64,26 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         switch(responseIndex) {
             case 0:
 
-                /*RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                final String email = SharedPrefs.readSharedSetting(RouteFeedback.this, getString(R.string.email), null);
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
                     json.put(getString(R.string.db_key_end_comment),mComment.getText().toString());
-                    json.put(getString(R.string.db_key_route_note),String.valueOf(mRatingBar.getRating()));
+                    json.put(getString(R.string.db_key_route_score),String.valueOf(mRatingBar.getRating()));
+                    json.put(getString(R.string.email),email);
+                    json.put(getString(R.string.route_id),route.getmId());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //TODO : Penser à rentrer le bon url
-                String url = getString(R.string.db_verification);
+
+                String url = getString(R.string.db_feedback);
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                               //TODO: voir avec taki ce que le service retourne
+                               //TODO: retourn status = success
                                 Intent intent = new Intent(RouteFeedback.this, MainActivity.class);
                                 startActivity(intent);
                             }
@@ -85,10 +93,10 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
                         System.out.println("ERROR : "+error);
                     }
                 });
-                queue.add(jsonObjectRequest);*/
+                queue.add(jsonObjectRequest);
 
-                Intent intent = new Intent(RouteFeedback.this, MainActivity.class);
-                startActivity(intent);
+               /* Intent intent = new Intent(RouteFeedback.this, MainActivity.class);
+                startActivity(intent);*/
                 break;
         }
 
