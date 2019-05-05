@@ -83,5 +83,8 @@
     <string name="db_key_description">description</string>
     <string name="db_key_type">type</string>
     <string name="db_key_textual_solution">solution</string>
+    <string name="db_key_end_comment">comment</string>
+    <string name="db_key_route_note">note</string>
+
 
 </resources>

@@ -47,10 +47,10 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
 
 
         // TODO : Delete this function call when we receive information from the server
-       /*routesList();
-        construction(view);*/
+       routesList();
+        construction(view);
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
+       /* RequestQueue queue = Volley.newRequestQueue(getContext());
         //TODO : Penser à rentrer le bon url
         String url = getString(R.string.db_routes_list);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -75,7 +75,7 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                 System.out.println("ERROR : "+error);
             }
         });
-        queue.add(getRequest);
+        queue.add(getRequest);*/
 
         return view;
     }

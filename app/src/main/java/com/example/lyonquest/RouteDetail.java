@@ -66,7 +66,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
             case 0:
                 final String email = SharedPrefs.readSharedSetting(RouteDetail.this, getString(R.string.email), null);
 
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+               /* RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
@@ -107,10 +107,10 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                         System.out.println("ERROR : "+error);
                     }
                 });
-                queue.add(jsonObjectRequest);
+                queue.add(jsonObjectRequest);*/
 
-               /* Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
+                startActivity(intent);
                 break;
         }
     }

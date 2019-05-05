@@ -15,11 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ThemeChange"
+        <activity android:name=".RouteFeedback"></activity>
+        <activity
+            android:name=".ThemeChange"
             android:label="@string/title_activity_theme_change"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DisplayTextRiddle"
             android:screenOrientation="portrait" />

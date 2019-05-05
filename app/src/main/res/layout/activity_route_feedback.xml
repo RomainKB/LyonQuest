@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RouteFeedback">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".RouteFeedback">
+
+        <TextView
+            android:id="@+id/activity_end_route_comment_title"
+            style="@style/TitleStyleGene"
+            android:text="Commentaire de fin de parcours"
+            />
+
+        <EditText
+            android:id="@+id/activity_end_route_comment_input_field"
+            style="@style/EditTextStyleGene"
+            android:hint="Commentaire"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/EditTextStyleGene"
+            android:numStars="5"
+            android:rating="2.0"
+            android:stepSize="1.0" />
+
+        <Button
+            android:id="@+id/activity_end_route_validation"
+            style="@style/ButtonStyleGene"
+            android:text="Ok !" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

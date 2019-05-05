@@ -47,9 +47,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
      * The button to give up the route.
      */
     private Button mGiveUp;
-
-
-
+    
     private List<TextualRiddle> mRiddle = new ArrayList<>();
 
     //TODO : a retirer quand le serveur nous donnera l'énigme
@@ -80,22 +78,19 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
 
 
 
-        riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
-        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
-
-        System.out.println(riddle.getmDescription());
+       /* riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));*/
 
 
-
-       /* // TODO : Delete this function call when we receive information from the server
+        // TODO : Delete this function call when we receive information from the server
         riddlelist();
         //TODO : récupérer l'énigme passée par le intent.
         mTitle.setText(mRiddle.get(enigmeNum).getmTitle());
-        mDescription.setText(mRiddle.get(enigmeNum).getmDescription()); */
-        mTitle.setText(riddle.getmTitle());
-        mDescription.setText(riddle.getmDescription());
+        mDescription.setText(mRiddle.get(enigmeNum).getmDescription());
 
 
+       /* mTitle.setText(riddle.getmTitle());
+        mDescription.setText(riddle.getmDescription());*/
 
     }
 
@@ -107,9 +102,11 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
             case 0:
 
                 final String email = SharedPrefs.readSharedSetting(DisplayTextRiddle.this, getString(R.string.email), null);
-                /*if(enigmeNum == mRiddle.size()-1){
+
+
+                if(enigmeNum == mRiddle.size()-1){
                     enigmeNum = 0;
-                    Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
+                    Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
                     startActivity(intent);
                 }else if(mAnswer.getText().toString().equals(mRiddle.get(enigmeNum).getmSolution())){
                     enigmeNum+=1;
@@ -121,9 +118,9 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                }*/
+                }
 
-                String solution = mAnswer.getText().toString();
+               /* String solution = mAnswer.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
@@ -151,7 +148,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                         if(end.equals(getString(R.string.db_fini))){
                                             //Cas ou l'utilisateur a fini le parcours
 
-                                            Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
+                                            Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
                                             //TODO: Penser à afficher à l'utilisateur fini
                                             startActivity(intent);
                                         }else {
@@ -185,6 +182,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     }
                 });
                 queue.add(jsonObjectRequest);
+                */
                 break;
 
             case 1:
