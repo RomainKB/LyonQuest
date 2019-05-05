@@ -32,6 +32,7 @@
     <string name="button_verification">Vérifier</string>
     <string name="button_give_up">Abandonner</string>
     <string name="riddle">riddle</string>
+    <string name="profil">Consulter le profil</string>
 
     <!-- Strings related to the theme-->
     <string name="set_theme">theme</string>
@@ -80,6 +81,8 @@
     <string name="db_key_email">email</string>
     <string name="db_key_password">password</string>
     <string name="db_key_username">username</string>
+    <string name="db_key_rank">rank</string>
+    <string name="db_key_route_number">route_number</string>
     <string name="db_key_description">description</string>
     <string name="db_key_type">type</string>
     <string name="db_key_textual_solution">solution</string>

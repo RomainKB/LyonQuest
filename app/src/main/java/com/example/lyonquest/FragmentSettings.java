@@ -28,11 +28,14 @@ public class FragmentSettings extends Fragment implements View.OnClickListener{
 
         Button button =(Button)view.findViewById(R.id.sign_out_button);
         Button button1 =(Button)view.findViewById(R.id.change_theme);
+        Button button2 =(Button)view.findViewById(R.id.profil);
         button.setTag(0);
         button1.setTag(1);
+        button2.setTag(2);
 
         button.setOnClickListener(this);
         button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
 
         return view;
 
@@ -53,12 +56,14 @@ public class FragmentSettings extends Fragment implements View.OnClickListener{
 
             case 1:
                 Intent intent1 = new Intent(getActivity(), ThemeChange.class);
-                System.out.println("je suis la");
                 startActivity(intent1);
 
                 break;
 
-
+            case 2:
+                Intent intent2 = new Intent(getActivity(), UserProfil.class);
+                startActivity(intent2);
+                break;
 
         }
     }

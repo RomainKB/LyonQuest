@@ -9,6 +9,8 @@ import android.widget.Button;
 
 public class ThemeChange extends AppCompatActivity implements View.OnClickListener {
 
+    View holderbg, dynamicbg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

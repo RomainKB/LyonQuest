@@ -10,8 +10,13 @@
     <TextView
         android:id="@+id/setting_text"
         style="@style/TextStyleGene"
-        android:text="Settings" />
+        android:text="@string/title_settings" />
 
+    <Button
+        android:id="@+id/profil"
+        style="@style/ButtonStyleGene"
+        android:text="@string/profil"
+        />
     <Button
         android:id="@+id/change_theme"
         style="@style/ButtonStyleGene"
