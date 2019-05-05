@@ -111,13 +111,13 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                             break;
 
                                          case "destination":
-                                            Intent intent2 = new Intent(RouteDetail.this, DisplayDestinationRiddle.class);
-                                            Riddle r2 = new Riddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                            /*Intent intent2 = new Intent(RouteDetail.this, DisplayDestinationRiddle.class);
+                                            DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"","");
                                             Bundle bundle2 = new Bundle();
                                             bundle2.putSerializable(getString(R.string.riddle),r2);
                                             bundle2.putSerializable(getString(R.string.route),route);
                                             intent2.putExtras(bundle2);
-                                            startActivity(intent2);
+                                            startActivity(intent2);*/
                                             break;
 
                                     }

@@ -53,7 +53,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
     //TODO : a retirer quand le serveur nous donnera l'énigme
     public static int enigmeNum = 0;
 
-    private Riddle riddle;
+    private TextualRiddle riddle;
     private Route route;
 
 
@@ -78,7 +78,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
 
 
 
-        riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        riddle = (TextualRiddle) getIntent().getSerializableExtra(getString(R.string.riddle));
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
 
 
@@ -169,13 +169,13 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                                     break;
 
                                                 case "destination":
-                                                    Intent intent2 = new Intent(DisplayTextRiddle.this, DisplayDestinationRiddle.class);
-                                                    Riddle r2 = new Riddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                                    /*Intent intent2 = new Intent(DisplayTextRiddle.this, DisplayDestinationRiddle.class);
+                                                    DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"","");
                                                     Bundle bundle2 = new Bundle();
                                                     bundle2.putSerializable(getString(R.string.riddle),r2);
                                                     bundle2.putSerializable(getString(R.string.route),route);
                                                     intent2.putExtras(bundle2);
-                                                    startActivity(intent2);
+                                                    startActivity(intent2);*/
                                                     break;
                                             }
 
