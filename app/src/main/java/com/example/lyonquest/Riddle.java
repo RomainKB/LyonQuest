@@ -1,5 +1,7 @@
 package com.example.lyonquest;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -7,16 +9,16 @@ import java.io.Serializable;
  *
  * This class is the riddle class.
  */
-public class Riddle implements Serializable {
+public abstract class Riddle implements Serializable {
 
     /**
      * The title of the riddle
      */
-    private String mTitle;
+    protected String mTitle;
     /**
      * The description of the riddle
      */
-    private String mDescription;
+    protected String mDescription;
 
 
     /**
@@ -46,6 +48,8 @@ public class Riddle implements Serializable {
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
     }
+
+    public abstract JSONObject toJSON();
 
 
 }

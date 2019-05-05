@@ -1,5 +1,9 @@
 package com.example.lyonquest;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +76,25 @@ public class Route implements Serializable {
         this.mNbTimeAbandoned = 0;
         this.mNbTimeFinished = 0;
         this.riddles = new ArrayList<>();
+    }
+
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+        JSONArray riddlesJson = new JSONArray();
+
+        try {
+            json.put("description", mDescription);
+            json.put("name", mName);
+
+            for (Riddle riddle: riddles) {
+                riddlesJson.put(riddle.toJSON());
+            }
+            json.put("riddles", riddlesJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 
     /*-----------------Getter et setter--------------------------------- */

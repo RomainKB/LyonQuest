@@ -63,6 +63,7 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         TextualRiddle riddle = new TextualRiddle("",editTextRiddleText.getText().toString(), editTextRiddleAnswer.getText().toString());
         route.getRiddles().add(riddle);
 
+        System.out.println(route.toJSON());
         Intent intent = new Intent(this, RiddleCreationActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(getString(R.string.route),route);
