@@ -45,14 +45,14 @@
             />
 
         <Button
-            android:id="@+id/riddle_creation_finish_route_button"
+            android:id="@+id/riddle_creation_next_riddle_button"
             style="@style/ButtonStyleGene"
             android:text="@string/riddle_creation_next_riddle"
             tools:context=".RiddleCreationActivity"
             />
 
         <Button
-            android:id="@+id/riddle_creation_next_riddle_button"
+            android:id="@+id/riddle_creation_finish_route_button"
             style="@style/ButtonStyleGene"
             android:text="@string/riddle_creation_finish_route"
             tools:context=".RiddleCreationActivity"

@@ -1,6 +1,8 @@
 package com.example.lyonquest;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by romaink on 01/05/2019.
@@ -38,7 +40,7 @@ public class Route implements Serializable {
      */
     private int mLength;
 
-
+    private ArrayList<Riddle> riddles;
 
     /**
      * Constructor of the class.
@@ -58,6 +60,18 @@ public class Route implements Serializable {
         this.setmNbTimeFinished(mNbTimeFinished);
         this.setmNbTimeAbandoned(mNbTimeAbandoned);
         this.setmId(mId);
+        this.riddles = new ArrayList<>();
+    }
+
+    public Route(){
+        this.mId = 0;
+        this.mName = null;
+        this.mDescription = null;
+        this.mNote = 0;
+        this.mLength = 0;
+        this.mNbTimeAbandoned = 0;
+        this.mNbTimeFinished = 0;
+        this.riddles = new ArrayList<>();
     }
 
     /*-----------------Getter et setter--------------------------------- */
@@ -105,4 +119,12 @@ public class Route implements Serializable {
     public int getmNbTimeAbandoned() { return mNbTimeAbandoned; }
 
     public void setmNbTimeAbandoned(int mNbTimeAbandoned) { this.mNbTimeAbandoned = mNbTimeAbandoned; }
+
+    public ArrayList<Riddle> getRiddles() {
+        return riddles;
+    }
+
+    public void setRiddles(ArrayList<Riddle> riddles) {
+        this.riddles = riddles;
+    }
 }
