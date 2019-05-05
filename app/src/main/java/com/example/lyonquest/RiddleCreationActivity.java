@@ -9,6 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RiddleCreationActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Route route;
@@ -72,8 +82,33 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         }
 
         if(empty) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+
+            String url = getString(R.string.db_route_creation_url);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, route.toJSON(),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //try {
+
+                                //String aJsonString = response.getString(getString(R.string.db_status));
+                                //if(aJsonString.equals(getString(R.string.db_success))){
+                                    Intent intent = new Intent(RiddleCreationActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                //}else{
+                                //    System.out.println("Oops !!");
+
+                            //}catch(JSONException e){e.printStackTrace();}
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("ERROR : "+error);
+                }
+            });
+
+            queue.add(jsonObjectRequest);
+
         }else{
             focusView.requestFocus();
         }
