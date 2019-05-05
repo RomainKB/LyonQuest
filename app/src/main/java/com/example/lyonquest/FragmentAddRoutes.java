@@ -3,6 +3,7 @@ package com.example.lyonquest;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,22 +45,39 @@ public class FragmentAddRoutes extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        // Get back the tag button to know which route the user selected
+        boolean complete = true;
+        View focusView = null;
+        String name = editTextName.getText().toString();
+        String description = editTextDescription.getText().toString();
 
-        int responseIndex = (int) v.getTag();
+        if(TextUtils.isEmpty(description))
+        {
+            editTextDescription.setError(getString(R.string.error_field_required));
+            focusView = editTextDescription;
+            complete = false;
+        }
+        if(TextUtils.isEmpty(name))
+        {
+            editTextName.setError(getString(R.string.error_field_required));
+            focusView = editTextName;
+            complete = false;
+        }
 
-        route.setmName(editTextName.getText().toString());
-
-        route.setmDescription(editTextDescription.getText().toString());
-
-
-        if(responseIndex == 0) {
+        if(complete)
+        {
+            route.setmName(name);
+            route.setmDescription(description);
             Intent intent = new Intent(getActivity(), RiddleCreationActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(getString(R.string.route),route);
             intent.putExtras(bundle);
             startActivity(intent);
         }
+        else
+        {
+            focusView.requestFocus();
+        }
+
     }
 }
 

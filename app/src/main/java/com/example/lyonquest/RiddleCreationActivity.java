@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,21 +55,59 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     }
 
     private void finishRoot() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        String text = editTextRiddleText.getText().toString();
+        String answer =  editTextRiddleAnswer.getText().toString();
+        View focusView = null;
+        boolean empty = true;
+
+        if(!TextUtils.isEmpty(answer)){
+            editTextRiddleAnswer.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
+            focusView = editTextRiddleAnswer;
+            empty = false;
+        }
+        if(!TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
+            focusView = editTextRiddleText;
+            empty = false;
+        }
+
+        if(empty) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else{
+            focusView.requestFocus();
+        }
     }
 
     private void nextRiddle() {
-        System.out.println("////////////////////////// NEXT RIDDLE ////////////////////////////");
-        TextualRiddle riddle = new TextualRiddle("",editTextRiddleText.getText().toString(), editTextRiddleAnswer.getText().toString());
-        route.getRiddles().add(riddle);
+        String text = editTextRiddleText.getText().toString();
+        String answer =  editTextRiddleAnswer.getText().toString();
+        View focusView = null;
 
-        System.out.println(route.toJSON());
-        Intent intent = new Intent(this, RiddleCreationActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(getString(R.string.route),route);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        boolean complete = true;
+        if(TextUtils.isEmpty(answer)){
+            editTextRiddleAnswer.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleAnswer;
+            complete = false;
+        }
+        if(TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleText;
+            complete = false;
+        }
+
+        if(complete) {
+            TextualRiddle riddle = new TextualRiddle("", text, answer);
+            route.getRiddles().add(riddle);
+
+            Intent intent = new Intent(this, RiddleCreationActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(getString(R.string.route), route);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }else{
+            focusView.requestFocus();
+        }
     }
 
 }
