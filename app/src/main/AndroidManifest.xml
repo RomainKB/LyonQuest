@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UserProfil"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".DisplayDestinationRiddle"></activity>
+        <activity
+            android:name=".UserProfil"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RouteFeedback"
             android:screenOrientation="portrait" />

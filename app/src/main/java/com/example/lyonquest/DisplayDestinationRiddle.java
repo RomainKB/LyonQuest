@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayTextRiddle extends AppCompatActivity implements View.OnClickListener{
+public class DisplayDestinationRiddle extends AppCompatActivity implements View.OnClickListener{
     /**
      * The text view where we display the riddle title
      */
@@ -35,9 +35,13 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
      */
     private TextView mDescription;
     /**
-     * The edit text where the user can enter the answer
+     * The edit text where the user can enter the latitude
      */
-    private EditText mAnswer;
+    private EditText mLatitude;
+    /**
+     * The edit text where the user can enter the longitude
+     */
+    private EditText mLongitude;
 
     /**
      * The button to check the answer.
@@ -47,11 +51,6 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
      * The button to give up the route.
      */
     private Button mGiveUp;
-    
-    private List<TextualRiddle> mRiddle = new ArrayList<>();
-
-    //TODO : a retirer quand le serveur nous donnera l'énigme
-    public static int enigmeNum = 0;
 
     private Riddle riddle;
     private Route route;
@@ -67,7 +66,8 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
 
         mTitle = (TextView) findViewById(R.id.activity_display_title);
         mDescription = (TextView) findViewById(R.id.activity_display_description);
-        mAnswer = (EditText) findViewById(R.id.riddle_text_answer);
+        mLatitude = (EditText) findViewById(R.id.riddle_text_latitude);
+        mLongitude = (EditText) findViewById(R.id.riddle_text_longitude);
         mCheck = (Button) findViewById(R.id.check_button);
         mGiveUp = (Button) findViewById(R.id.give_up_button);
 
@@ -76,21 +76,11 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         mCheck.setOnClickListener(this);
         mGiveUp.setOnClickListener(this);
 
+        riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
 
-
-       /* riddle = (Riddle) getIntent().getSerializableExtra(getString(R.string.riddle));
-        route = (Route) getIntent().getSerializableExtra(getString(R.string.route));*/
-
-
-        // TODO : Delete this function call when we receive information from the server
-        riddlelist();
-        //TODO : récupérer l'énigme passée par le intent.
-        mTitle.setText(mRiddle.get(enigmeNum).getmTitle());
-        mDescription.setText(mRiddle.get(enigmeNum).getmDescription());
-
-
-       /* mTitle.setText(riddle.getmTitle());
-        mDescription.setText(riddle.getmDescription());*/
+        mTitle.setText(riddle.getmTitle());
+        mDescription.setText(riddle.getmDescription());
 
     }
 
@@ -101,33 +91,19 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         switch(responseIndex) {
             case 0:
 
-                final String email = SharedPrefs.readSharedSetting(DisplayTextRiddle.this, getString(R.string.email), null);
+                final String email = SharedPrefs.readSharedSetting(DisplayDestinationRiddle.this, getString(R.string.email), null);
 
 
-                if(enigmeNum == mRiddle.size()-1){
-                    enigmeNum = 0;
-                    Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
-                    startActivity(intent);
-                }else if(mAnswer.getText().toString().equals(mRiddle.get(enigmeNum).getmSolution())){
-                    enigmeNum+=1;
-                    Intent intent = new Intent(DisplayTextRiddle.this, DisplayTextRiddle.class);
-                    startActivity(intent);
-                }else{
-                    Context context = getApplicationContext();
-                    CharSequence text = "Mauvaise réponse ! Essaye encore";
-                    int duration = Toast.LENGTH_LONG;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-
-               /* String solution = mAnswer.getText().toString();
+                String latitude = mLatitude.getText().toString();
+                String longitude = mLongitude.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
                     json.put(getString(R.string.route_id),route.getmId());
                     json.put(getString(R.string.email),email);
-                    json.put(getString(R.string.db_key_textual_solution),solution);
+                    json.put(getString(R.string.db_key_latitude),latitude);
+                    json.put(getString(R.string.db_key_longitude),longitude);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -147,9 +123,7 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
 
                                         if(end.equals(getString(R.string.db_fini))){
                                             //Cas ou l'utilisateur a fini le parcours
-
-                                            Intent intent = new Intent(DisplayTextRiddle.this, RouteFeedback.class);
-                                            //TODO: Penser à afficher à l'utilisateur fini
+                                            Intent intent = new Intent(DisplayDestinationRiddle.this, RouteFeedback.class);
                                             startActivity(intent);
                                         }else {
                                             //Cas ou l'utilisateur a valider l'énigme mais pas fini le parcours
@@ -181,7 +155,6 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                         }
                                     }else{
                                         //Cas ou l'utilisateur a donné une mauvaise réponse
-
                                         Context context = getApplicationContext();
                                         CharSequence text = "La réponse n'est pas correct, veuillez ressayer.";
                                         int duration = Toast.LENGTH_LONG;
@@ -198,11 +171,11 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                     }
                 });
                 queue.add(jsonObjectRequest);
-                */
+
                 break;
 
             case 1:
-                Intent intent = new Intent(DisplayTextRiddle.this, MainActivity.class);
+                Intent intent = new Intent(DisplayDestinationRiddle.this, MainActivity.class);
                 startActivity(intent);
                 break;
 
@@ -218,13 +191,4 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
         toast.show();
     }
 
-    //TODO : a retirer quand le serveur nous donnera l'énigme
-    private void riddlelist(){
-        TextualRiddle r1 = new TextualRiddle("Le parc de la tête d'or", "En quel année a été ouvert pour la première fois ce parc ?","1857" );
-        TextualRiddle r2 = new TextualRiddle("Toujours des nombres !", "Quelle est la superficie de ce parc (en ha) ?","117" );
-        TextualRiddle r3 = new TextualRiddle("L'heureux propriétaire", "Qui est le propiétaire de ce parc ?", "Lyon");
-        mRiddle.add(r1);
-        mRiddle.add(r2);
-        mRiddle.add(r3);
-    }
 }

@@ -84,20 +84,31 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    System.out.println(response);
-                                    Intent intent = new Intent(RouteDetail.this, DisplayTextRiddle.class);
+
                                     String type = response.getString(getString(R.string.db_key_type));
                                     switch (type){
                                         case "password":
+                                            Intent intent1 = new Intent(RouteDetail.this, DisplayTextRiddle.class);
                                             TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
-                                            Bundle bundle = new Bundle();
-                                            bundle.putSerializable(getString(R.string.riddle),r1);
-                                            System.out.println(r1.getmDescription());
-                                            bundle.putSerializable(getString(R.string.route),route);
-                                            intent.putExtras(bundle);
+                                            Bundle bundle1 = new Bundle();
+                                            bundle1.putSerializable(getString(R.string.riddle),r1);
+                                            bundle1.putSerializable(getString(R.string.route),route);
+                                            intent.putExtras(bundle1);
+                                            startActivity(intent1);
                                             break;
+
+                                         case "destination":
+                                            Intent intent2 = new Intent(RouteDetail.this, DisplayDestinationRiddle.class);
+                                            Riddle r2 = new Riddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                            Bundle bundle2 = new Bundle();
+                                            bundle2.putSerializable(getString(R.string.riddle),r2);
+                                            bundle2.putSerializable(getString(R.string.route),route);
+                                            intent.putExtras(bundle2);
+                                            startActivity(intent2);
+                                            break;
+
                                     }
-                                        startActivity(intent);
+
 
                                 }catch(JSONException e){e.printStackTrace();}
                             }
