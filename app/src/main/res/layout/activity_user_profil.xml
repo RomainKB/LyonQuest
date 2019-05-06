@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/activity_display_username"
             style="@style/TitleStyleGene"
-            android:text="Pseudo (A faire)"
+            android:text="PRB"
             />
         <TextView
             android:id="@+id/activity_display_email"
@@ -26,12 +26,12 @@
         <TextView
             android:id="@+id/activity_display_rank"
             style="@style/TextStyleGene"
-            android:text="Classement (A faire)"
+            android:text="PRB"
             />
         <TextView
-            android:id="@+id/activity_display_route_numbers"
+            android:id="@+id/activity_display_score"
             style="@style/TextStyleGene"
-            android:text="Nombre de parcours effectués (A faire)"
+            android:text="PRB"
             />
 
 

@@ -84,6 +84,7 @@
     <string name="db_start_route">http://192.168.43.139:5000/lyon_quest/game/user_start_route/</string>
     <string name="db_verification">http://192.168.43.139:5000/lyon_quest/game/verify_riddle/</string>
     <string name="db_feedback">http://192.168.43.139:5000/lyon_quest/game/rate_route/</string>
+    <string name="db_user_profile">http://192.168.43.139:5000/lyon_quest/game/user_stats/</string>
     <string name="db_status">status</string>
     <string name="db_end">finished</string>
     <string name="db_fini">true</string>
@@ -100,6 +101,7 @@
     <string name="db_key_longitude">longitude</string>
     <string name="db_key_end_comment">comment</string>
     <string name="db_key_route_score">score</string>
+    <string name="db_key_score">score</string>
 
 
 

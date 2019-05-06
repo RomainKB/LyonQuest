@@ -1,6 +1,5 @@
 package com.example.lyonquest;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ public class UserProfil extends AppCompatActivity {
     /**
      * The number of routes that the user did
      */
-    private TextView mRouteNumber;
+    private TextView mScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +45,12 @@ public class UserProfil extends AppCompatActivity {
         mUsername = (TextView) findViewById(R.id.activity_display_username);
         mEmail = (TextView) findViewById(R.id.activity_display_email);
         mRank = (TextView) findViewById(R.id.activity_display_rank);
-        mRouteNumber = (TextView) findViewById(R.id.activity_display_route_numbers);
+        mScore = (TextView) findViewById(R.id.activity_display_score);
 
         String email = SharedPrefs.readSharedSetting(this, getString(R.string.email), null);
         mEmail.setText(email);
 
-         /*RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
                 try {
@@ -60,8 +59,7 @@ public class UserProfil extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //TODO : Penser à rentrer le bon url
-                String url = getString(R.string.db_start_route);
+                String url = getString(R.string.db_user_profile);
 
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
@@ -70,11 +68,11 @@ public class UserProfil extends AppCompatActivity {
                                 try {
                                     String username = response.getString(getString(R.string.db_key_username));
                                     String rank = response.getString(getString(R.string.db_key_rank));
-                                    String routeNumber = response.getString(getString(R.string.db_key_route_number));
+                                    String score = response.getString(getString(R.string.db_key_score));
 
                                     mUsername.setText(username);
-                                    mRank.setText(rank);
-                                    mRouteNumber.setText(routeNumber);
+                                    mRank.setText("Classemennt : "+rank);
+                                    mScore.setText("Score : "+score);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -86,6 +84,6 @@ public class UserProfil extends AppCompatActivity {
                         System.out.println("ERROR : "+error);
                     }
                 });
-                queue.add(jsonObjectRequest);*/
+                queue.add(jsonObjectRequest);
     }
 }

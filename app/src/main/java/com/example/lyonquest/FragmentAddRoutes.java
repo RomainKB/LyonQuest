@@ -17,8 +17,13 @@ import android.widget.EditText;
  *
  */
 public class FragmentAddRoutes extends Fragment implements View.OnClickListener{
-
+    /**
+     * The actual route create by the user
+     */
     private Route route;
+    /**
+     * The EditText where the user enter the route name.
+     */
     private EditText editTextName;
     private EditText editTextDescription;
     private Button btnRouteCreation;
