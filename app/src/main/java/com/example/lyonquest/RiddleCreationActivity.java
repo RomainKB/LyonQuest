@@ -16,16 +16,32 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Created by victorl on 30/04/2019.
+ *
+ * This activity allow the user to create a riddle and directly add it to the route which it currently creating.
+ */
 public class RiddleCreationActivity extends AppCompatActivity implements View.OnClickListener{
-
+    /**
+     * The route that is being created by the user
+     */
     private Route route;
-
+    /**
+     * The button to add a new riddle
+     */
     private Button btnNextRiddle;
-    private Button btnFinishRoot;
+    /**
+     * The button to finish the route
+     */
+    private Button btnFinishRoute;
+    /**
+     * The edit text to add the riddle description
+     */
     private EditText editTextRiddleText;
+    /**
+     * The edit text to add the riddle solution
+     */
     private EditText editTextRiddleAnswer;
 
     @Override
@@ -40,9 +56,9 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         btnNextRiddle.setTag(0);
         btnNextRiddle.setOnClickListener(this);
 
-        btnFinishRoot = findViewById(R.id.riddle_creation_finish_route_button);
-        btnFinishRoot.setTag(1);
-        btnFinishRoot.setOnClickListener(this);
+        btnFinishRoute = findViewById(R.id.riddle_creation_finish_route_button);
+        btnFinishRoute.setTag(1);
+        btnFinishRoute.setOnClickListener(this);
 
         editTextRiddleText = findViewById(R.id.riddle_creation_riddle_text_edit);
         editTextRiddleAnswer = findViewById(R.id.riddle_creation_answer_riddle_edit);
@@ -59,12 +75,12 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         if(((int)v.getTag()) == 0){
             nextRiddle();
-        }else if(v.getTag() == btnFinishRoot.getTag()){
-            finishRoot();
+        }else if(v.getTag() == btnFinishRoute.getTag()){
+            finishRoute();
         }
     }
 
-    private void finishRoot() {
+    private void finishRoute() {
         String text = editTextRiddleText.getText().toString();
         String answer =  editTextRiddleAnswer.getText().toString();
         View focusView = null;
@@ -130,7 +146,6 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
             focusView = editTextRiddleText;
             complete = false;
         }
-
         if(complete) {
             TextualRiddle riddle = new TextualRiddle("", text, answer);
             route.getRiddles().add(riddle);
