@@ -3,6 +3,11 @@ package com.example.lyonquest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by romaink on 01/05/2019.
+ *
+ * Object which represent textual riddle.
+ */
 public class TextualRiddle extends Riddle {
 
     /**
@@ -19,14 +24,6 @@ public class TextualRiddle extends Riddle {
         this.setmSolution(mSolution);
     }
 
-    public String getmSolution() {
-        return mSolution;
-    }
-
-    public void setmSolution(String mSolution) {
-        this.mSolution = mSolution;
-    }
-
     public JSONObject toJSON(){
         JSONObject json = new JSONObject();
 
@@ -40,4 +37,16 @@ public class TextualRiddle extends Riddle {
 
         return json;
     }
+
+    /*-----------------Getter et setter--------------------------------- */
+
+    public String getmSolution() {
+        return mSolution;
+    }
+
+    public void setmSolution(String mSolution) {
+        this.mSolution = mSolution;
+    }
+
+
 }

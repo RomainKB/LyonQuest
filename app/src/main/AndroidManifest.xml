@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".DisplayDestinationRiddle"></activity>
         <activity
-            android:name=".UserProfil"
+            android:name=".UserProfile"
             android:screenOrientation="portrait" />
         <activity
             android:name=".RouteFeedback"

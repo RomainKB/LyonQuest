@@ -19,20 +19,9 @@
     <string name="error_field_required">Veuillez completer ce champ</string>
     <string name="permission_rationale">"Pour l'auto-complétion de l'email nous avons besoin de cet accord."</string>
 
-    <string name="route">route</string>
-
-
     <!-- Strings related to sharedpreferences -->
     <string name="user">USER</string>
     <string name="email">email</string>
-
-
-    <string name="action_start_route">C\'est parti</string>
-    <string name="route_id">route_id</string>
-    <string name="button_verification">Vérifier</string>
-    <string name="button_give_up">Abandonner</string>
-    <string name="riddle">riddle</string>
-    <string name="profil">Consulter le profil</string>
 
     <!-- Strings related to the theme-->
     <string name="set_theme">theme</string>
@@ -62,13 +51,10 @@
     <string name="riddle_creation_finish_route">Finir le parcours</string>
     <string name="riddle_creation_empty_riddle_before_finish">Ajouter l\'énigme ou vider les champs avant de valider le parcours</string>
 
-
     <!-- Strings related to bottom nav bar -->
     <string name="bottom_navigation_menu_left">Parcours</string>
     <string name="bottom_navigation_menu_middle">Création</string>
     <string name="bottom_navigation_menu_right">Paramètres</string>
-
-    <string name="action_settings">Paramètres</string>
 
     <!-- Strings related to answers -->
     <string name="answer_false">La réponse n\'est pas correct, veuillez ressayer.</string>
@@ -105,5 +91,13 @@
 
 
 
+    <string name="action_start_route">C\'est parti</string>
+    <string name="route_id">route_id</string>
+    <string name="button_verification">Vérifier</string>
+    <string name="button_give_up">Abandonner</string>
+    <string name="riddle">riddle</string>
+    <string name="profil">Consulter le profil</string>
+    <string name="route">route</string>
+    <string name="action_settings">Paramètres</string>
 
 </resources>

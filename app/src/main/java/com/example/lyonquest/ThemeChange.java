@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * Created by romaink on 30/04/2019.
+ *
+ * This activity allow the user to chose to change the application theme.
+ */
 public class ThemeChange extends AppCompatActivity implements View.OnClickListener {
-
-    View holderbg, dynamicbg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

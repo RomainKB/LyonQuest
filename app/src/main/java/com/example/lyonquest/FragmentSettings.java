@@ -61,7 +61,7 @@ public class FragmentSettings extends Fragment implements View.OnClickListener{
                 break;
 
             case 2:
-                Intent intent2 = new Intent(getActivity(), UserProfil.class);
+                Intent intent2 = new Intent(getActivity(), UserProfile.class);
                 startActivity(intent2);
                 break;
 

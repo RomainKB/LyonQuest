@@ -28,6 +28,12 @@ public class DestinationRiddle extends Riddle {
         this.setmLongitude(longitude);
     }
 
+    public JSONObject toJSON(){
+        JSONObject json = new JSONObject();
+        return json;
+    }
+
+    /*-----------------Getter et setter--------------------------------- */
 
     public double getmLatitude() {
         return mLatitude;
@@ -45,8 +51,5 @@ public class DestinationRiddle extends Riddle {
         this.mLongitude = mLongitude;
     }
 
-    public JSONObject toJSON(){
-        JSONObject json = new JSONObject();
-        return json;
-    }
+
 }

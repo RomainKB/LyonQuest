@@ -3,7 +3,11 @@ package com.example.lyonquest;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
+/**
+ * Created by romaink on 30/04/2019.
+ *
+ * This class is used to save to the user sharepreferences somme informations.
+ */
 public class SharedPrefs {
 
     final static String FileName = "UserInformations";

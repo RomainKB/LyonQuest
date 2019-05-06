@@ -15,7 +15,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UserProfil extends AppCompatActivity {
+/**
+ * Created by romaink on 05/05/2019.
+ *
+ * Activity where the user can see details about his profile.
+ *
+ */
+public class UserProfile extends AppCompatActivity {
 
     /**
      * The username of the user
@@ -30,7 +36,7 @@ public class UserProfil extends AppCompatActivity {
      */
     private TextView mRank;
     /**
-     * The number of routes that the user did
+     * The score that the user reach (addition of all points he wins when he finished a route).
      */
     private TextView mScore;
 
@@ -40,7 +46,7 @@ public class UserProfil extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
         int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
         Utils.onActivityCreateSetTheme(this,choice);
-        setContentView(R.layout.activity_user_profil);
+        setContentView(R.layout.activity_user_profile);
 
         mUsername = (TextView) findViewById(R.id.activity_display_username);
         mEmail = (TextView) findViewById(R.id.activity_display_email);

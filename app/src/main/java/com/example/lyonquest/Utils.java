@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 /**
+ * Created by romaink on 30/04/2019.
+ *
  * This class is here to set the activity theme of the application.
  */
 public class Utils {

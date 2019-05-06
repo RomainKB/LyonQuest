@@ -20,6 +20,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by romaink on 04/05/2019.
+ *
+ * Activity where the user can say his feedback about the route he just finished.
+ *
+ */
 public class RouteFeedback extends AppCompatActivity implements View.OnClickListener {
 
     /**
@@ -34,7 +40,9 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
      * The button to validate his feedback
      */
     private Button mValidation;
-
+    /**
+     * The route finished by the user
+     */
     private Route route;
 
     @Override
@@ -53,8 +61,6 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         mValidation.setOnClickListener(this);
 
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
-
-
     }
 
     @Override
@@ -83,7 +89,6 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                               //TODO: retourn status = success
                                 Intent intent = new Intent(RouteFeedback.this, MainActivity.class);
                                 startActivity(intent);
                             }
@@ -99,6 +104,5 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);*/
                 break;
         }
-
     }
 }
