@@ -31,18 +31,32 @@
             tools:context=".RiddleCreationActivity"
             />
 
-        <TextView
-            android:id="@+id/riddle_creation_ask_answer_riddle"
-            style="@style/TextStyleGene"
-            android:text="@string/riddle_creation_ask_riddle_answer"
-            tools:context=".RiddleCreationActivity"
-            />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RiddleCreationActivity"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/riddle_creation_answer_riddle_edit"
-            style="@style/TextStyleGene"
+
+        <Spinner
+            android:id="@+id/spinner_riddle_type"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:text="@string/riddle_creation_ask_riddle_type"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/riddle_creation_fragment_layout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             tools:context=".RiddleCreationActivity"
-            />
+            android:orientation="vertical">
+        </LinearLayout>
 
         <Button
             android:id="@+id/riddle_creation_next_riddle_button"

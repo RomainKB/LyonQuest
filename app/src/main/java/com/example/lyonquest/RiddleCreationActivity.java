@@ -2,12 +2,18 @@ package com.example.lyonquest;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,11 +21,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RiddleCreationActivity extends AppCompatActivity implements View.OnClickListener{
+public class RiddleCreationActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Route route;
 
@@ -27,6 +34,7 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     private Button btnFinishRoot;
     private EditText editTextRiddleText;
     private EditText editTextRiddleAnswer;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +53,24 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         btnFinishRoot.setOnClickListener(this);
 
         editTextRiddleText = findViewById(R.id.riddle_creation_riddle_text_edit);
-        editTextRiddleAnswer = findViewById(R.id.riddle_creation_answer_riddle_edit);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_riddle_type);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Riddle_types, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(this);
+
+        fragment = FragmentTextualRiddleCreation.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+        transaction.commit();
 
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
-
-        System.out.println(route);
-        System.out.println(route.getmName());
-        System.out.println(route.getmDescription());
-        System.out.println(route.getRiddles());
     }
 
     @Override
@@ -65,6 +83,11 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     }
 
     private void finishRoot() {
+        if(fragment instanceof FragmentTextualRiddleCreation){
+            FragmentTextualRiddleCreation fragmentTextualRiddleCreation = (FragmentTextualRiddleCreation) fragment;
+            editTextRiddleAnswer = fragmentTextualRiddleCreation.getEditTextAnswer();
+        }
+
         String text = editTextRiddleText.getText().toString();
         String answer =  editTextRiddleAnswer.getText().toString();
         View focusView = null;
@@ -115,6 +138,11 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     }
 
     private void nextRiddle() {
+        if(fragment instanceof FragmentTextualRiddleCreation){
+            FragmentTextualRiddleCreation fragmentTextualRiddleCreation = (FragmentTextualRiddleCreation) fragment;
+            editTextRiddleAnswer = fragmentTextualRiddleCreation.getEditTextAnswer();
+        }
+
         String text = editTextRiddleText.getText().toString();
         String answer =  editTextRiddleAnswer.getText().toString();
         View focusView = null;
@@ -145,4 +173,27 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        FragmentTransaction transaction;
+        switch (position){
+            case 0:
+                fragment = FragmentTextualRiddleCreation.newInstance();
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+                transaction.commit();
+                break;
+            case 1:
+                fragment = FragmentGeoRiddleCreation.newInstance();
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+                transaction.commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
