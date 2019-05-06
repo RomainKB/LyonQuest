@@ -34,14 +34,7 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
      * The text view where we display the riddle description
      */
     private TextView mDescription;
-    /**
-     * The edit text where the user can enter the latitude
-     */
-    private EditText mLatitude;
-    /**
-     * The edit text where the user can enter the longitude
-     */
-    private EditText mLongitude;
+
 
     /**
      * The button to check the answer.
@@ -66,8 +59,6 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
 
         mTitle = (TextView) findViewById(R.id.activity_display_title);
         mDescription = (TextView) findViewById(R.id.activity_display_description);
-        mLatitude = (EditText) findViewById(R.id.riddle_text_latitude);
-        mLongitude = (EditText) findViewById(R.id.riddle_text_longitude);
         mCheck = (Button) findViewById(R.id.check_button);
         mGiveUp = (Button) findViewById(R.id.give_up_button);
 
@@ -92,10 +83,10 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
             case 0:
 
                 final String email = SharedPrefs.readSharedSetting(DisplayDestinationRiddle.this, getString(R.string.email), null);
+                //TODO : il faut récupérer la latitude et longitude !
+                String latitude ="";
+                String longitude ="";
 
-
-                String latitude = mLatitude.getText().toString();
-                String longitude = mLongitude.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
@@ -142,13 +133,13 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
                                                     break;
 
                                                 case "destination":
-                                                    Intent intent2 = new Intent(DisplayDestinationRiddle.this, DisplayDestinationRiddle.class);
-                                                    Riddle r2 = new Riddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                                   /*Intent intent2 = new Intent(DisplayDestinationRiddle.this, DisplayDestinationRiddle.class);
+                                                    DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"","");
                                                     Bundle bundle2 = new Bundle();
                                                     bundle2.putSerializable(getString(R.string.riddle),r2);
                                                     bundle2.putSerializable(getString(R.string.route),route);
                                                     intent2.putExtras(bundle2);
-                                                    startActivity(intent2);
+                                                    startActivity(intent2);*/
                                                     break;
                                             }
 

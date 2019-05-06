@@ -23,21 +23,6 @@
             android:text="PRB"
             />
 
-        <EditText
-            android:id="@+id/riddle_text_latitude"
-            style="@style/EditTextStyleGene"
-            android:hint="Latitude"
-            android:maxLines="1"
-            android:singleLine="true"
-            />
-        <EditText
-            android:id="@+id/riddle_text_longitude"
-            style="@style/EditTextStyleGene"
-            android:hint="Longitude"
-            android:maxLines="1"
-            android:singleLine="true"
-           />
-
         <Button
             android:id="@+id/check_button"
             style="@style/ButtonStyleGene"
