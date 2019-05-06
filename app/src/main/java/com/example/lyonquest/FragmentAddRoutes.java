@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Created by romaink on 30/04/2019.
+ *
+ * Fragment which is display to the MainActicity activity. It allow to the user to create a new route.
+ *
+ */
 public class FragmentAddRoutes extends Fragment implements View.OnClickListener{
 
     private Route route;

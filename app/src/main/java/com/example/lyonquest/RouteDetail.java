@@ -20,8 +20,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by romaink on 02/05/2019.
+ *
+ * Activity where the user can see details about the route he has chosen.
+ *
+ */
 public class RouteDetail extends AppCompatActivity implements View.OnClickListener{
-
+    /**
+     * The actual route selected by the user
+     */
     private Route route;
     /**
      * The text view where we display the route title
@@ -80,7 +88,6 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                 final String email = SharedPrefs.readSharedSetting(RouteDetail.this, getString(R.string.email), null);
 
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-
                 JSONObject json = new JSONObject();
                 try {
                     json.put(getString(R.string.route_id),route.getmId());
@@ -89,9 +96,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //TODO : Penser à rentrer le bon url
                 String url = getString(R.string.db_start_route);
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -100,6 +105,7 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
 
                                     String type = response.getString(getString(R.string.db_key_type));
                                     switch (type){
+
                                         case "password":
                                             Intent intent1 = new Intent(RouteDetail.this, DisplayTextRiddle.class);
                                             TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
@@ -110,18 +116,17 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                             startActivity(intent1);
                                             break;
 
-                                         case "destination":
-                                            /*Intent intent2 = new Intent(RouteDetail.this, DisplayDestinationRiddle.class);
-                                            DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"","");
+                                         case "geocoords":
+                                            Intent intent2 = new Intent(RouteDetail.this, DisplayDestinationRiddle.class);
+                                            DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),0.0,0.0);
                                             Bundle bundle2 = new Bundle();
                                             bundle2.putSerializable(getString(R.string.riddle),r2);
                                             bundle2.putSerializable(getString(R.string.route),route);
                                             intent2.putExtras(bundle2);
-                                            startActivity(intent2);*/
+                                            startActivity(intent2);
                                             break;
 
                                     }
-
 
                                 }catch(JSONException e){e.printStackTrace();}
                             }

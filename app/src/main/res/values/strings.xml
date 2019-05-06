@@ -70,6 +70,12 @@
 
     <string name="action_settings">Paramètres</string>
 
+    <!-- Strings related to answers -->
+    <string name="answer_false">La réponse n\'est pas correct, veuillez ressayer.</string>
+
+    <!-- Strings related to onBackPressed -->
+    <string name="onBackPressed_forbiden">Vous ne pouvez pas revenir en arrière, désolé. Veuillez abandonner si vous souhaitez quitter le parcours.</string>
+
     <!-- Strings related to DB -->
     <string name="db_login_url">http://192.168.43.139:5000/lyon_quest/users/login/</string>
     <string name="db_registration_url">http://192.168.43.139:5000/lyon_quest/users/register/</string>
