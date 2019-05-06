@@ -53,14 +53,16 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         Utils.onActivityCreateSetTheme(this,choice);
         setContentView(R.layout.activity_route_feedback);
 
+        System.out.println("je suissssss");
         mComment = (EditText) findViewById(R.id.activity_end_route_comment_input_field);
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mValidation = (Button) findViewById(R.id.activity_end_route_validation);
 
-        mValidation.setTag(0);
+        mValidation.setTag(10);
         mValidation.setOnClickListener(this);
 
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
+        System.out.println("route feedback "+route);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         int responseIndex = (int) v.getTag();
 
         switch(responseIndex) {
-            case 0:
+            case 10:
 
                 final String email = SharedPrefs.readSharedSetting(RouteFeedback.this, getString(R.string.email), null);
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -79,7 +81,7 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
                     json.put(getString(R.string.db_key_route_score),String.valueOf(mRatingBar.getRating()));
                     json.put(getString(R.string.email),email);
                     json.put(getString(R.string.route_id),route.getmId());
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

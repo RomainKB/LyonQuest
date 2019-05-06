@@ -126,6 +126,16 @@ public class RouteDetail extends AppCompatActivity implements View.OnClickListen
                                             startActivity(intent2);
                                             break;
 
+                                        case "picture":
+                                            Intent intent3 = new Intent(RouteDetail.this, DisplayPictureRiddle.class);
+                                            PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                            Bundle bundle3 = new Bundle();
+                                            bundle3.putSerializable(getString(R.string.riddle),r3);
+                                            bundle3.putSerializable(getString(R.string.route),route);
+                                            intent3.putExtras(bundle3);
+                                            startActivity(intent3);
+                                            break;
+
                                     }
 
                                 }catch(JSONException e){e.printStackTrace();}

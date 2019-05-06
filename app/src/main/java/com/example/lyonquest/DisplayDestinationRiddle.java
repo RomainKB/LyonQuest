@@ -180,8 +180,11 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
 
                                         if(finished.equals(getString(R.string.db_fini))){
                                             //Case where the user finished the route
-                                            Intent intent = new Intent(DisplayDestinationRiddle.this, RouteFeedback.class);
-                                            startActivity(intent);
+                                            Intent intent0 = new Intent(DisplayDestinationRiddle.this, RouteFeedback.class);
+                                            Bundle bundle0 = new Bundle();
+                                            bundle0.putSerializable(getString(R.string.route),route);
+                                            intent0.putExtras(bundle0);
+                                            startActivity(intent0);
                                         }else {
                                             //Case where the user validate the riddle but didn't finished the route.
                                             String type = response.getString(getString(R.string.db_key_type));
@@ -205,6 +208,16 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
                                                     bundle2.putSerializable(getString(R.string.route),route);
                                                     intent2.putExtras(bundle2);
                                                     startActivity(intent2);
+                                                    break;
+
+                                                case "picture":
+                                                    Intent intent3 = new Intent(DisplayDestinationRiddle.this, DisplayDestinationRiddle.class);
+                                                    PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
+                                                    Bundle bundle3 = new Bundle();
+                                                    bundle3.putSerializable(getString(R.string.riddle),r3);
+                                                    bundle3.putSerializable(getString(R.string.route),route);
+                                                    intent3.putExtras(bundle3);
+                                                    startActivity(intent3);
                                                     break;
                                             }
                                         }

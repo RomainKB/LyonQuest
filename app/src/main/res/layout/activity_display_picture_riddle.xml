@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DisplayPictureRiddle">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".DisplayPictureRiddle">
+
+        <TextView
+            android:id="@+id/activity_display_title"
+            style="@style/TitleStyleGene"
+            android:text="PRB"
+            />
+        <TextView
+            android:id="@+id/activity_display_description"
+            style="@style/TextStyleGene"
+            android:text="PRB"
+            />
+
+        <Button
+            android:id="@+id/take_picture"
+            style="@style/ButtonStyleGene"
+            android:text="@string/picture"
+            />
+
+        <Button
+            android:id="@+id/give_up_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/button_give_up"
+            />
+
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
