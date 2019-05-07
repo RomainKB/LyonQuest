@@ -15,6 +15,7 @@ public class DestinationRiddle extends Riddle {
      */
     private double mLatitude;
     private double mLongitude;
+    private double delta;
 
 
     /**
@@ -22,14 +23,32 @@ public class DestinationRiddle extends Riddle {
      * @param latitude The latitude of the solution
      * @param longitude The latitude of the solution
      */
-    public DestinationRiddle(String mTitle, String mDescription, double latitude, double longitude) {
+    public DestinationRiddle(String mTitle, String mDescription, double latitude, double longitude, double delta) {
         super(mTitle,mDescription);
         this.setmLatitude(latitude);
         this.setmLongitude(longitude);
     }
 
+    public DestinationRiddle(String mTitle, String mDescription, double latitude, double longitude) {
+        super(mTitle,mDescription);
+        this.setmLatitude(latitude);
+        this.setmLongitude(longitude);
+        this.delta = delta;
+    }
+
     public JSONObject toJSON(){
         JSONObject json = new JSONObject();
+
+        try {
+            json.put("text", mDescription);
+            json.put("latitude", mLatitude);
+            json.put("longitude", mLongitude);
+            json.put("delta", delta);
+            json.put("type","geocoords");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return json;
     }
 

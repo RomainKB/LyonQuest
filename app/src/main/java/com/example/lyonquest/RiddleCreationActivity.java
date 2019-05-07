@@ -1,15 +1,19 @@
 package com.example.lyonquest;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Spinner;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,34 +21,24 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-/**
- * Created by victorl on 30/04/2019.
- *
- * This activity allow the user to create a riddle and directly add it to the route which it currently creating.
- */
-public class RiddleCreationActivity extends AppCompatActivity implements View.OnClickListener{
-    /**
-     * The route that is being created by the user
-     */
+
+public class RiddleCreationActivity extends FragmentActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+
     private Route route;
-    /**
-     * The button to add a new riddle
-     */
+
     private Button btnNextRiddle;
-    /**
-     * The button to finish the route
-     */
-    private Button btnFinishRoute;
-    /**
-     * The edit text to add the riddle description
-     */
+    private Button btnFinishRoot;
     private EditText editTextRiddleText;
-    /**
-     * The edit text to add the riddle solution
-     */
     private EditText editTextRiddleAnswer;
+    private Fragment fragment;
+
+    private double longitude;
+    private double latitude;
+    private double delta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,46 +52,57 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
         btnNextRiddle.setTag(0);
         btnNextRiddle.setOnClickListener(this);
 
-        btnFinishRoute = findViewById(R.id.riddle_creation_finish_route_button);
-        btnFinishRoute.setTag(1);
-        btnFinishRoute.setOnClickListener(this);
+        btnFinishRoot = findViewById(R.id.riddle_creation_finish_route_button);
+        btnFinishRoot.setTag(1);
+        btnFinishRoot.setOnClickListener(this);
 
         editTextRiddleText = findViewById(R.id.riddle_creation_riddle_text_edit);
-        editTextRiddleAnswer = findViewById(R.id.riddle_creation_answer_riddle_edit);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_riddle_type);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Riddle_types, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(this);
+
+        fragment = FragmentTextualRiddleCreation.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+        transaction.commit();
 
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
-
-        System.out.println(route);
-        System.out.println(route.getmName());
-        System.out.println(route.getmDescription());
-        System.out.println(route.getRiddles());
     }
 
     @Override
     public void onClick(View v) {
         if(((int)v.getTag()) == 0){
             nextRiddle();
-        }else if(v.getTag() == btnFinishRoute.getTag()){
-            finishRoute();
+        }else if(v.getTag() == btnFinishRoot.getTag()){
+            finishRoot();
         }
     }
 
-    private void finishRoute() {
+    private void finishRoot() {
+        if(fragment instanceof FragmentTextualRiddleCreation){
+            FragmentTextualRiddleCreation fragmentTextualRiddleCreation = (FragmentTextualRiddleCreation) fragment;
+            editTextRiddleAnswer = fragmentTextualRiddleCreation.getEditTextAnswer();
+        }
+
         String text = editTextRiddleText.getText().toString();
-        String answer =  editTextRiddleAnswer.getText().toString();
         View focusView = null;
         boolean empty = true;
 
-        if(!TextUtils.isEmpty(answer)){
-            editTextRiddleAnswer.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
-            focusView = editTextRiddleAnswer;
-            empty = false;
-        }
         if(!TextUtils.isEmpty(text)){
             editTextRiddleText.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
             focusView = editTextRiddleText;
             empty = false;
         }
+
+        System.out.println(route.toJSON());
 
         if(empty) {
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -133,8 +138,55 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
     }
 
     private void nextRiddle() {
+        System.out.println("NEXT RIDDLE");
+        if(fragment instanceof FragmentTextualRiddleCreation){
+            System.out.println("TEXTUAL");
+            FragmentTextualRiddleCreation fragmentTextualRiddleCreation = (FragmentTextualRiddleCreation) fragment;
+            editTextRiddleAnswer = fragmentTextualRiddleCreation.getEditTextAnswer();
+            System.out.println(editTextRiddleAnswer);
+            nextRiddleTextual();
+        } else if (fragment instanceof FragmentGeoRiddleCreation) {
+            System.out.println("GEO");
+            FragmentGeoRiddleCreation fragmentGeoRiddleCreation = (FragmentGeoRiddleCreation) fragment;
+            if(fragmentGeoRiddleCreation.isChoosen()) {
+                System.out.println("CHOOSEN");
+                latitude = fragmentGeoRiddleCreation.getLatitude();
+                longitude = fragmentGeoRiddleCreation.getLongitude();
+                delta = fragmentGeoRiddleCreation.getDelta();
+                nextRiddleGeo();
+            }
+        }
+
+
+    }
+
+    private void nextRiddleGeo() {
+        System.out.println("NEXT RIDDLE GEO");
+
         String text = editTextRiddleText.getText().toString();
-        String answer =  editTextRiddleAnswer.getText().toString();
+        View focusView = null;
+
+        boolean complete = true;
+        if(TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleText;
+            complete = false;
+        }
+
+
+        DestinationRiddle riddle = new DestinationRiddle("",text,latitude,longitude,delta);
+        if(complete) {
+            addRiddle(riddle);
+        }else{
+            focusView.requestFocus();
+        }
+    }
+
+    private void nextRiddleTextual() {
+        System.out.println("NEXT RIDDLE TEXT");
+
+        String text = editTextRiddleText.getText().toString();
+        String answer = editTextRiddleAnswer.getText().toString();
         View focusView = null;
 
         boolean complete = true;
@@ -148,27 +200,47 @@ public class RiddleCreationActivity extends AppCompatActivity implements View.On
             focusView = editTextRiddleText;
             complete = false;
         }
-        if(complete) {
-            TextualRiddle riddle = new TextualRiddle("", text, answer);
-            route.getRiddles().add(riddle);
 
-            Intent intent = new Intent(this, RiddleCreationActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(getString(R.string.route), route);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        TextualRiddle riddle = new TextualRiddle("", text, answer);
+        if(complete) {
+            addRiddle(riddle);
         }else{
             focusView.requestFocus();
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        Context context = getApplicationContext();
-        CharSequence text = getString(R.string.onBackPressed_forbiden);
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+    private void addRiddle(Riddle riddle)
+    {
+        route.getRiddles().add(riddle);
+
+        Intent intent = new Intent(this, RiddleCreationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(getString(R.string.route), route);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        FragmentTransaction transaction;
+        switch (position){
+            case 0:
+                fragment = FragmentTextualRiddleCreation.newInstance();
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+                transaction.commit();
+                break;
+            case 1:
+                fragment = FragmentGeoRiddleCreation.newInstance();
+                transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+                transaction.commit();
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
