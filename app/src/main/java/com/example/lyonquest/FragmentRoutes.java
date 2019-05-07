@@ -45,11 +45,6 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_fragment_routes, container, false);
 
-
-       /* // TODO : Delete this function call when we receive information from the server
-       routesList();
-        construction(view);*/
-
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = getString(R.string.db_routes_list);
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -89,15 +84,6 @@ public class FragmentRoutes extends Fragment implements View.OnClickListener {
         bundle.putSerializable(getString(R.string.route),mRoutes.get(responseIndex));
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-    /* TODO : Méthode à remplacer par les infos venant du serveur */
-    private void routesList(){
-         Route r1 = new Route(1,"Parcours historique", "Petit parcours qui vous fera visiter les principaux lieux historique de la ville.",4,120, 10, 0);
-         Route r2 = new Route(2,"Visite vieux lyon", "Vous aimez les petites histoires ? Vous avez toujours eu envi de traverser les traboules ? Ce parcours est fait pour vous ! ", 5,80,125, 12);
-         Route r3 = new Route (3,"Hardcore","Vous aimez le challenge et courrir ? Go ! ",  2, 35, 3, 121);
-         mRoutes.add(r1);
-         mRoutes.add(r2);
-         mRoutes.add(r3);
     }
 
     private void construction(View view){

@@ -58,6 +58,7 @@
 
     <!-- Strings related to answers -->
     <string name="answer_false">La réponse n\'est pas correct, veuillez ressayer.</string>
+    <string name="answer_false_dp">La réponse n\'est pas correct, l\'image n\'est pas correcte où vous ne vous trouver pas au bon endroit !</string>
 
     <!-- Strings related to onBackPressed -->
     <string name="onBackPressed_forbiden">Vous ne pouvez pas revenir en arrière, désolé. Veuillez abandonner si vous souhaitez quitter le parcours.</string>

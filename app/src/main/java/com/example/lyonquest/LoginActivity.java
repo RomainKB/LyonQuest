@@ -65,14 +65,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "romain.briekekuss@gmail.com:romain", "victor.lezaud@insa-lyon.fr:victor",
-    };
-
-    /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
@@ -381,15 +373,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             });
             queue.add(jsonObjectRequest);
 
-         /* // TODO : Delete this loop when we connect to the server
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    mAnswer = pieces[1].equals(mPassword);
-                }
-            }
-            verification(mAnswer, mEmail);*/
             return mAnswer;
         }
 

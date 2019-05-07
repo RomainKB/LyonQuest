@@ -18,7 +18,6 @@ public class ThemeChange extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
         int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
         Utils.onActivityCreateSetTheme(this,choice);

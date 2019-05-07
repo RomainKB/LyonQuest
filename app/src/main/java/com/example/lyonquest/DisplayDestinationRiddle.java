@@ -152,9 +152,6 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
 
-                System.out.println("latitude :"+latitude);
-                System.out.println("longitude :"+longitude);
-
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
                 JSONObject json = new JSONObject();
@@ -218,6 +215,16 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
                                                     bundle3.putSerializable(getString(R.string.route),route);
                                                     intent3.putExtras(bundle3);
                                                     startActivity(intent3);
+                                                    break;
+
+                                                case "dest_pict":
+                                                    Intent intent4 = new Intent(DisplayDestinationRiddle.this, DisplayDestPictRiddle.class);
+                                                    DestPictRiddle r4 = new DestPictRiddle("Enigme", response.getString(getString(R.string.db_key_description)),0.0,0.0);
+                                                    Bundle bundle4 = new Bundle();
+                                                    bundle4.putSerializable(getString(R.string.riddle),r4);
+                                                    bundle4.putSerializable(getString(R.string.route),route);
+                                                    intent4.putExtras(bundle4);
+                                                    startActivity(intent4);
                                                     break;
                                             }
                                         }

@@ -36,12 +36,12 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by romaink on 06/05/2019.
+ * Created by romaink on 07/05/2019.
  *
- * Activity where the user try to answer to a destination riddle.
+ * Activity where the user try to answer to a textual riddle.
  *
  */
-public class DisplayPictureRiddle extends AppCompatActivity implements View.OnClickListener {
+public class DisplayDestPictRiddle extends AppCompatActivity implements View.OnClickListener {
     /**
      * The text view where we display the riddle title
      */
@@ -61,12 +61,16 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
     /**
      * The actual destination riddle show to the player
      */
-    private PictureRiddle riddle;
+    private DestPictRiddle riddle;
     /**
      * The actual route played by the player.
      */
     private Route route;
-
+    /**
+     * Location attributs use to have the latitude and longitude.
+     */
+    private LocationManager locationManager;
+    private LocationListener listener;
 
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
@@ -76,14 +80,13 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
 
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SHARED_PREFS), MODE_PRIVATE);
         int choice = Integer.parseInt(sharedPreferences.getString(getString(R.string.set_theme), "1"));
         Utils.onActivityCreateSetTheme(this, choice);
-        setContentView(R.layout.activity_display_picture_riddle);
+        setContentView(R.layout.activity_display_dest_pict_riddle);
 
         mTitle = (TextView) findViewById(R.id.activity_display_title);
         mDescription = (TextView) findViewById(R.id.activity_display_description);
@@ -92,16 +95,41 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
 
         mPicture.setTag(0);
         mGiveUp.setTag(1);
-
-        mGiveUp.setOnClickListener(this);
         mPicture.setOnClickListener(this);
+        mGiveUp.setOnClickListener(this);
 
-        riddle = (PictureRiddle) getIntent().getSerializableExtra(getString(R.string.riddle));
+        riddle = (DestPictRiddle) getIntent().getSerializableExtra(getString(R.string.riddle));
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
 
         mTitle.setText(riddle.getmTitle());
         mDescription.setText(riddle.getmDescription());
 
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        gpsListener();
+
+    }
+
+    /**
+     * This method set a GPS listener. It's used to get the actual location.
+     */
+    private void gpsListener() {
+        listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {}
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {}
+
+            @Override
+            public void onProviderEnabled(String s) {}
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+            }
+        };
     }
 
     @Override
@@ -110,7 +138,6 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
 
         switch (responseIndex) {
             case 0:
-                //TODO : faire le truc de la photo !
 
                 if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
@@ -123,11 +150,12 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                 break;
 
             case 1:
-                Intent intent = new Intent(DisplayPictureRiddle.this, MainActivity.class);
+                Intent intent = new Intent(DisplayDestPictRiddle.this, MainActivity.class);
                 startActivity(intent);
                 break;
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -142,7 +170,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             //get  image thumbnail
-             photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
             //encode image
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -153,7 +181,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
         }
     }
 
-        @Override
+    @Override
     public void onBackPressed() {
         Context context = getApplicationContext();
         CharSequence text = getString(R.string.onBackPressed_forbiden);
@@ -162,8 +190,26 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
         toast.show();
     }
 
+
     private void serveur(String encoded){
-        final String email = SharedPrefs.readSharedSetting(DisplayPictureRiddle.this, getString(R.string.email), null);
+        final String email = SharedPrefs.readSharedSetting(DisplayDestPictRiddle.this, getString(R.string.email), null);
+
+        // first check for permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
+                        , 10);
+            }
+            return; //It will return if permissions aren't allowed.
+        }
+        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+        Location location = locationManager.getLastKnownLocation("gps");
+
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JSONObject json = new JSONObject();
@@ -171,6 +217,8 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
             json.put(getString(R.string.route_id),route.getmId());
             json.put(getString(R.string.email),email);
             json.put(getString(R.string.db_picture),encoded);
+            json.put(getString(R.string.db_key_latitude),latitude);
+            json.put(getString(R.string.db_key_longitude),longitude);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -188,7 +236,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
 
                                 if(finished.equals(getString(R.string.db_fini))){
                                     //Case where the user finished the route
-                                    Intent intent0 = new Intent(DisplayPictureRiddle.this, RouteFeedback.class);
+                                    Intent intent0 = new Intent(DisplayDestPictRiddle.this, RouteFeedback.class);
                                     Bundle bundle0 = new Bundle();
                                     bundle0.putSerializable(getString(R.string.route),route);
                                     intent0.putExtras(bundle0);
@@ -199,7 +247,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
 
                                     switch (type){
                                         case "password":
-                                            Intent intent1 = new Intent(DisplayPictureRiddle.this, DisplayTextRiddle.class);
+                                            Intent intent1 = new Intent(DisplayDestPictRiddle.this, DisplayTextRiddle.class);
                                             TextualRiddle r1 = new TextualRiddle("Enigme", response.getString(getString(R.string.db_key_description)),"" );
                                             Bundle bundle1 = new Bundle();
                                             bundle1.putSerializable(getString(R.string.riddle),r1);
@@ -209,7 +257,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                                             break;
 
                                         case "geocoords":
-                                            Intent intent2 = new Intent(DisplayPictureRiddle.this, DisplayDestinationRiddle.class);
+                                            Intent intent2 = new Intent(DisplayDestPictRiddle.this, DisplayDestinationRiddle.class);
                                             DestinationRiddle r2 = new DestinationRiddle("Enigme", response.getString(getString(R.string.db_key_description)),0.0,0.0);
                                             Bundle bundle2 = new Bundle();
                                             bundle2.putSerializable(getString(R.string.riddle),r2);
@@ -219,7 +267,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                                             break;
 
                                         case "picture":
-                                            Intent intent3 = new Intent(DisplayPictureRiddle.this, DisplayDestinationRiddle.class);
+                                            Intent intent3 = new Intent(DisplayDestPictRiddle.this, DisplayDestinationRiddle.class);
                                             PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
                                             Bundle bundle3 = new Bundle();
                                             bundle3.putSerializable(getString(R.string.riddle),r3);
@@ -228,9 +276,8 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                                             startActivity(intent3);
                                             break;
 
-
                                         case "dest_pict":
-                                            Intent intent4 = new Intent(DisplayPictureRiddle.this, DisplayDestPictRiddle.class);
+                                            Intent intent4 = new Intent(DisplayDestPictRiddle.this, DisplayDestPictRiddle.class);
                                             DestPictRiddle r4 = new DestPictRiddle("Enigme", response.getString(getString(R.string.db_key_description)),0.0,0.0);
                                             Bundle bundle4 = new Bundle();
                                             bundle4.putSerializable(getString(R.string.riddle),r4);
@@ -243,7 +290,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                             }else{
                                 //Case where the user gave a false answer
                                 Context context = getApplicationContext();
-                                CharSequence text = getString(R.string.answer_false);
+                                CharSequence text = getString(R.string.answer_false_dp);
                                 int duration = Toast.LENGTH_LONG;
                                 Toast toast = Toast.makeText(context, text, duration);
                                 toast.show();
@@ -260,4 +307,6 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
         queue.add(jsonObjectRequest);
     }
 
+
 }
+

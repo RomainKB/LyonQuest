@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -53,7 +54,6 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         Utils.onActivityCreateSetTheme(this,choice);
         setContentView(R.layout.activity_route_feedback);
 
-        System.out.println("je suissssss");
         mComment = (EditText) findViewById(R.id.activity_end_route_comment_input_field);
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mValidation = (Button) findViewById(R.id.activity_end_route_validation);
@@ -62,7 +62,7 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
         mValidation.setOnClickListener(this);
 
         route = (Route) getIntent().getSerializableExtra(getString(R.string.route));
-        System.out.println("route feedback "+route);
+
     }
 
     @Override
@@ -106,5 +106,14 @@ public class RouteFeedback extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);*/
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Context context = getApplicationContext();
+        CharSequence text = getString(R.string.onBackPressed_forbiden);
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }
