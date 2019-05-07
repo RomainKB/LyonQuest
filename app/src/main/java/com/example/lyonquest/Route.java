@@ -46,6 +46,7 @@ public class Route implements Serializable {
 
     private ArrayList<Riddle> riddles;
 
+
     /**
      * Constructor of the class.
      * @param mId The id of the route.
@@ -66,6 +67,7 @@ public class Route implements Serializable {
         this.setmId(mId);
         this.riddles = new ArrayList<>();
     }
+
 
     public Route(){
         this.mId = 0;
@@ -150,4 +152,5 @@ public class Route implements Serializable {
     public void setRiddles(ArrayList<Riddle> riddles) {
         this.riddles = riddles;
     }
+
 }

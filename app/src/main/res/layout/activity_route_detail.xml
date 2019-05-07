@@ -40,6 +40,14 @@
             android:text="@string/action_start_route"
             />
 
+        <LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+            android:orientation = "vertical"
+            style="@style/TextStyleGene"
+            android:id = "@+id/activity_display_routes_layoutOfDynamicContent">
+        </LinearLayout>
+
 
     </LinearLayout>
+
+
 </android.support.v4.widget.NestedScrollView>
