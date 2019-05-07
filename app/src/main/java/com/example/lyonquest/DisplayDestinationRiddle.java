@@ -208,7 +208,7 @@ public class DisplayDestinationRiddle extends AppCompatActivity implements View.
                                                     break;
 
                                                 case "picture":
-                                                    Intent intent3 = new Intent(DisplayDestinationRiddle.this, DisplayDestinationRiddle.class);
+                                                    Intent intent3 = new Intent(DisplayDestinationRiddle.this, DisplayPictureRiddle.class);
                                                     PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
                                                     Bundle bundle3 = new Bundle();
                                                     bundle3.putSerializable(getString(R.string.riddle),r3);

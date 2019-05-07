@@ -236,6 +236,7 @@ public class DisplayDestPictRiddle extends AppCompatActivity implements View.OnC
 
                                 if(finished.equals(getString(R.string.db_fini))){
                                     //Case where the user finished the route
+
                                     Intent intent0 = new Intent(DisplayDestPictRiddle.this, RouteFeedback.class);
                                     Bundle bundle0 = new Bundle();
                                     bundle0.putSerializable(getString(R.string.route),route);
@@ -244,6 +245,7 @@ public class DisplayDestPictRiddle extends AppCompatActivity implements View.OnC
                                 }else {
                                     //Case where the user validate the riddle but didn't finished the route.
                                     String type = response.getString(getString(R.string.db_key_type));
+                                    System.out.println(type);
 
                                     switch (type){
                                         case "password":
@@ -267,7 +269,8 @@ public class DisplayDestPictRiddle extends AppCompatActivity implements View.OnC
                                             break;
 
                                         case "picture":
-                                            Intent intent3 = new Intent(DisplayDestPictRiddle.this, DisplayDestinationRiddle.class);
+                                            System.out.println("je suis iciiiio");
+                                            Intent intent3 = new Intent(DisplayDestPictRiddle.this, DisplayPictureRiddle.class);
                                             PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
                                             Bundle bundle3 = new Bundle();
                                             bundle3.putSerializable(getString(R.string.riddle),r3);

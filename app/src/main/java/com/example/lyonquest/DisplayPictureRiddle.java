@@ -219,7 +219,7 @@ public class DisplayPictureRiddle extends AppCompatActivity implements View.OnCl
                                             break;
 
                                         case "picture":
-                                            Intent intent3 = new Intent(DisplayPictureRiddle.this, DisplayDestinationRiddle.class);
+                                            Intent intent3 = new Intent(DisplayPictureRiddle.this, DisplayPictureRiddle.class);
                                             PictureRiddle r3 = new PictureRiddle("Enigme", response.getString(getString(R.string.db_key_description)));
                                             Bundle bundle3 = new Bundle();
                                             bundle3.putSerializable(getString(R.string.riddle),r3);
