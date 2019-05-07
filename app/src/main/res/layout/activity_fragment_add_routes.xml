@@ -23,7 +23,9 @@
             android:id="@+id/add_routes_ask_name_route"
             style="@style/TextStyleGene"
             android:text="@string/add_routes_ask_name_route"
-            tools:context=".FragmentAddRoutes"/>
+            tools:context=".FragmentAddRoutes"
+            android:maxLines="1"
+            android:singleLine="true"/>
 
         <EditText
             style="@style/TextStyleGene"

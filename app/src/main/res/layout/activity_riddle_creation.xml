@@ -58,6 +58,9 @@
             android:orientation="vertical">
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
         <Button
             android:id="@+id/riddle_creation_next_riddle_button"
             style="@style/ButtonStyleGene"
@@ -69,6 +72,13 @@
             android:id="@+id/riddle_creation_finish_route_button"
             style="@style/ButtonStyleGene"
             android:text="@string/riddle_creation_finish_route"
+            tools:context=".RiddleCreationActivity"
+            />
+
+        <Button
+            android:id="@+id/riddle_creation_cancel_button"
+            style="@style/ButtonStyleGene"
+            android:text="@string/riddle_creation_cancel"
             tools:context=".RiddleCreationActivity"
             />
 

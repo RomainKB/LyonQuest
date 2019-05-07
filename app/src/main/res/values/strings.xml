@@ -27,13 +27,6 @@
     <string name="email">email</string>
 
 
-    <string name="action_start_route">C\'est parti</string>
-    <string name="route_id">route_id</string>
-    <string name="button_verification">Vérifier</string>
-    <string name="button_give_up">Abandonner</string>
-    <string name="riddle">riddle</string>
-    <string name="profil">Consulter le profil</string>
-
     <!-- Strings related to the theme-->
     <string name="set_theme">theme</string>
     <string name="SHARED_PREFS">codeTheme</string>
@@ -68,6 +61,7 @@
     <string-array name="Riddle_types">
         <item>Mot de passe</item>
         <item>Géolocalisation</item>
+        <item>Photo</item>
     </string-array>
 
 
@@ -118,12 +112,23 @@
     <string name="button_give_up">Abandonner</string>
     <string name="riddle">riddle</string>
     <string name="profil">Consulter le profil</string>
-    <string name="route">route</string>
     <string name="action_settings">Paramètres</string>
     <string name="picture">Photo</string>
     <string name="db_picture">picture</string>
     <string name="title_activity_maps">Map</string>
     <string name="riddle_creation_ask_delta">Delta</string>
+    <string name="riddle_creation_cancel">Annuler</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="riddle_creation_choose_picure">Critère validation photo</string>
+    <string name="riddle_creation_picture_choosen">critère choisi !</string>
+    <string name="choose_picture_title">Critère de validation</string>
+    <string name="choose_picture_sponsored">Partenariats</string>
+    <string name="choose_picture_validation_sponsored">Valider ce choix</string>
+    <string name="choose_picture_validation_tag">Valider ce choix</string>
+    <string name="choose_picture_research_tag">Rechercher les tags</string>
+    <string name="choose_picture_tags">Recherche par tags</string>
 
 
 </resources>

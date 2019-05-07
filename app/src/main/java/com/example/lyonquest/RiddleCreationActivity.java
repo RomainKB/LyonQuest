@@ -31,6 +31,7 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
     private Route route;
 
     private Button btnNextRiddle;
+    private Button btnCancel;
     private Button btnFinishRoot;
     private EditText editTextRiddleText;
     private EditText editTextRiddleAnswer;
@@ -39,6 +40,8 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
     private double longitude;
     private double latitude;
     private double delta;
+    private String answer;
+    private boolean custom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,15 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
         btnFinishRoot.setTag(1);
         btnFinishRoot.setOnClickListener(this);
 
+
+        btnCancel = findViewById(R.id.riddle_creation_cancel_button);
+        btnCancel.setTag(2);
+        btnCancel.setOnClickListener(this);
+
+
         editTextRiddleText = findViewById(R.id.riddle_creation_riddle_text_edit);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_riddle_type);
+        Spinner spinner = findViewById(R.id.spinner_riddle_type);
 // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Riddle_types, android.R.layout.simple_spinner_item);
@@ -79,11 +88,19 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        if(((int)v.getTag()) == 0){
+        if(v.getTag() == btnNextRiddle.getTag()){
             nextRiddle();
-        }else if(v.getTag() == btnFinishRoot.getTag()){
-            finishRoot();
         }
+        if(v.getTag() == btnFinishRoot.getTag()){
+            finishRoot();
+        }else if(v.getTag() == btnCancel.getTag()){
+            cancel();
+        }
+    }
+
+    private void cancel() {
+        Intent intent = new Intent(RiddleCreationActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void finishRoot() {
@@ -155,9 +172,38 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
                 delta = fragmentGeoRiddleCreation.getDelta();
                 nextRiddleGeo();
             }
+        } else if (fragment instanceof FragmentPictRiddleCreation) {
+            System.out.println("Picture");
+            FragmentPictRiddleCreation fragmentPictRiddleCreation = (FragmentPictRiddleCreation) fragment;
+            if(fragmentPictRiddleCreation.isChoosen()) {
+                System.out.println("CHOOSEN");
+                answer = fragmentPictRiddleCreation.getAnswer();
+                System.out.println("ANSWER :::" + answer);
+                custom = fragmentPictRiddleCreation.isCustom();
+                nextRiddlePict();
+            }
         }
 
 
+    }
+
+    private void nextRiddlePict() {
+        String text = editTextRiddleText.getText().toString();
+        View focusView = null;
+
+        boolean complete = true;
+        if(TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleText;
+            complete = false;
+        }
+
+        PictureRiddle riddle = new PictureRiddle("",text,answer,custom);
+        if(complete) {
+            addRiddle(riddle);
+        }else{
+            focusView.requestFocus();
+        }
     }
 
     private void nextRiddleGeo() {
@@ -173,7 +219,7 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
             complete = false;
         }
 
-
+        System.out.println("DELTA = " + delta);
         DestinationRiddle riddle = new DestinationRiddle("",text,latitude,longitude,delta);
         if(complete) {
             addRiddle(riddle);
@@ -226,17 +272,18 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
         switch (position){
             case 0:
                 fragment = FragmentTextualRiddleCreation.newInstance();
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
-                transaction.commit();
+
                 break;
             case 1:
                 fragment = FragmentGeoRiddleCreation.newInstance();
-                transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
-                transaction.commit();
+                break;
+            case 2:
+                fragment = FragmentPictRiddleCreation.newInstance();
                 break;
         }
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.riddle_creation_fragment_layout, fragment);
+        transaction.commit();
     }
 
     @Override

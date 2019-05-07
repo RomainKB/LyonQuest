@@ -27,13 +27,13 @@ public class DestinationRiddle extends Riddle {
         super(mTitle,mDescription);
         this.setmLatitude(latitude);
         this.setmLongitude(longitude);
+        this.delta = delta;
     }
 
     public DestinationRiddle(String mTitle, String mDescription, double latitude, double longitude) {
         super(mTitle,mDescription);
         this.setmLatitude(latitude);
         this.setmLongitude(longitude);
-        this.delta = delta;
     }
 
     public JSONObject toJSON(){

@@ -20,12 +20,14 @@
         android:id="@+id/maps_activity_ask_delta"
         style="@style/TextStyleGene"
         android:text="@string/riddle_creation_ask_delta"
-        tools:context=".RiddleCreationActivity"/>
+        tools:context=".MapsActivity"/>
 
     <EditText
         android:id="@+id/maps_activity_edit_delta"
         style="@style/TextStyleGene"
-        tools:context=".RiddleCreationActivity"
+        tools:context=".MapsActivity"
+        android:maxLines="1"
+        android:singleLine="true"
         />
 
     <Button

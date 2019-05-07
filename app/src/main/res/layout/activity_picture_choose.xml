@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PictureChooseActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PictureChooseActivity"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/choose_picture_activity_title"
+            style="@style/TitleStyleGene"
+            android:text="@string/choose_picture_title"
+            tools:context=".PictureChooseActivity"/>
+
+        <TextView
+            android:id="@+id/choose_picture_sponsored_text"
+            style="@style/TextStyleGene"
+            android:text="@string/choose_picture_sponsored"
+            tools:context=".PictureChooseActivity"/>
+
+        <Spinner
+                android:id="@+id/spinner_sponsored"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/riddle_creation_ask_riddle_type"
+                tools:context=".PictureChooseActivity"/>
+
+
+        <Button
+            android:id="@+id/choose_picture_validation_sponsored"
+            style="@style/TextStyleGene"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/choose_picture_validation_sponsored"
+            tools:context=".PictureChooseActivity"
+            />
+
+
+
+        <TextView
+            android:id="@+id/choose_picture_tag_text"
+            style="@style/TextStyleGene"
+            android:text="@string/choose_picture_tags"
+            tools:context=".PictureChooseActivity"/>
+
+        <EditText
+            android:id="@+id/choose_picture_tag_research"
+            style="@style/TextStyleGene"
+            tools:context=".PictureChooseActivity"
+            />
+        <Spinner
+            android:id="@+id/spinner_tags"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".PictureChooseActivity"/>
+
+        <Button
+            android:id="@+id/choose_picture_button_research_tag"
+            style="@style/TextStyleGene"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/choose_picture_research_tag"
+            tools:context=".PictureChooseActivity"
+            />
+
+
+        <Button
+            android:id="@+id/choose_picture_validation_tags"
+            style="@style/TextStyleGene"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="@string/choose_picture_validation_tag"
+            tools:context=".PictureChooseActivity"
+            />
+
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
