@@ -176,7 +176,6 @@ public class DisplayTextRiddle extends AppCompatActivity implements View.OnClick
                                                     startActivity(intent4);
                                                     break;
                                             }
-
                                         }
                                     }else{
                                         //Case where the user gave a false answer
