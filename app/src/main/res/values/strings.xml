@@ -60,6 +60,7 @@
     <string name="riddle_creation_ask_riddle_type">Type de l\'énigme</string>
     <string name="riddle_creation_ask_riddle_answer">Réponse de l\'énigme</string>
     <string name="riddle_creation_choose_localisation">Choisir la localisation</string>
+    <string name="riddle_creation_localisation_choosen">Localisation choisie</string>
     <string name="riddle_creation_next_riddle">Enigme suivante</string>
     <string name="riddle_creation_finish_route">Finir le parcours</string>
     <string name="riddle_creation_empty_riddle_before_finish">Ajouter l\'énigme ou vider les champs avant de valider le parcours</string>
@@ -102,6 +103,7 @@
     <string name="db_key_end_comment">comment</string>
     <string name="db_key_route_score">score</string>
     <string name="title_activity_maps">Map</string>
+    <string name="riddle_creation_ask_delta">Delta</string>
 
 
 </resources>

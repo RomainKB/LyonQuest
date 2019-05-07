@@ -36,6 +36,10 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
     private EditText editTextRiddleAnswer;
     private Fragment fragment;
 
+    private double longitude;
+    private double latitude;
+    private double delta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,20 +93,16 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
         }
 
         String text = editTextRiddleText.getText().toString();
-        String answer =  editTextRiddleAnswer.getText().toString();
         View focusView = null;
         boolean empty = true;
 
-        if(!TextUtils.isEmpty(answer)){
-            editTextRiddleAnswer.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
-            focusView = editTextRiddleAnswer;
-            empty = false;
-        }
         if(!TextUtils.isEmpty(text)){
             editTextRiddleText.setError(getString(R.string.riddle_creation_empty_riddle_before_finish));
             focusView = editTextRiddleText;
             empty = false;
         }
+
+        System.out.println(route.toJSON());
 
         if(empty) {
             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -138,13 +138,55 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
     }
 
     private void nextRiddle() {
+        System.out.println("NEXT RIDDLE");
         if(fragment instanceof FragmentTextualRiddleCreation){
+            System.out.println("TEXTUAL");
             FragmentTextualRiddleCreation fragmentTextualRiddleCreation = (FragmentTextualRiddleCreation) fragment;
             editTextRiddleAnswer = fragmentTextualRiddleCreation.getEditTextAnswer();
+            System.out.println(editTextRiddleAnswer);
+            nextRiddleTextual();
+        } else if (fragment instanceof FragmentGeoRiddleCreation) {
+            System.out.println("GEO");
+            FragmentGeoRiddleCreation fragmentGeoRiddleCreation = (FragmentGeoRiddleCreation) fragment;
+            if(fragmentGeoRiddleCreation.isChoosen()) {
+                System.out.println("CHOOSEN");
+                latitude = fragmentGeoRiddleCreation.getLatitude();
+                longitude = fragmentGeoRiddleCreation.getLongitude();
+                delta = fragmentGeoRiddleCreation.getDelta();
+                nextRiddleGeo();
+            }
         }
 
+
+    }
+
+    private void nextRiddleGeo() {
+        System.out.println("NEXT RIDDLE GEO");
+
         String text = editTextRiddleText.getText().toString();
-        String answer =  editTextRiddleAnswer.getText().toString();
+        View focusView = null;
+
+        boolean complete = true;
+        if(TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleText;
+            complete = false;
+        }
+
+
+        DestinationRiddle riddle = new DestinationRiddle("",text,latitude,longitude,delta);
+        if(complete) {
+            addRiddle(riddle);
+        }else{
+            focusView.requestFocus();
+        }
+    }
+
+    private void nextRiddleTextual() {
+        System.out.println("NEXT RIDDLE TEXT");
+
+        String text = editTextRiddleText.getText().toString();
+        String answer = editTextRiddleAnswer.getText().toString();
         View focusView = null;
 
         boolean complete = true;
@@ -159,18 +201,23 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
             complete = false;
         }
 
+        TextualRiddle riddle = new TextualRiddle("", text, answer);
         if(complete) {
-            TextualRiddle riddle = new TextualRiddle("", text, answer);
-            route.getRiddles().add(riddle);
-
-            Intent intent = new Intent(this, RiddleCreationActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(getString(R.string.route), route);
-            intent.putExtras(bundle);
-            startActivity(intent);
+            addRiddle(riddle);
         }else{
             focusView.requestFocus();
         }
+    }
+
+    private void addRiddle(Riddle riddle)
+    {
+        route.getRiddles().add(riddle);
+
+        Intent intent = new Intent(this, RiddleCreationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(getString(R.string.route), route);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

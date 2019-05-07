@@ -28,7 +28,8 @@ public class FragmentTextualRiddleCreation extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_textual_riddle_creation, container, false);
-        editTextAnswer = view.findViewById(R.id.riddle_creation_riddle_text_edit);
+        editTextAnswer = view.findViewById(R.id.riddle_creation_answer_riddle_edit);
+        System.out.println(editTextAnswer);
         return view;
     }
 
