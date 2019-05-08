@@ -28,7 +28,7 @@ public class PictureRiddle extends Riddle {
 
         try {
             json.put("text", mDescription);
-            json.put("label", label);
+            json.put("solution", label);
             json.put("type","picture");
             if(custom){
                 json.put("method","custom");

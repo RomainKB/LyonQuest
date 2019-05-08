@@ -8,19 +8,35 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class PictureChooseActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private ArrayList<CharSequence> sponsored;
+    private ArrayList<CharSequence> sponsoredDisplay;
+    private ArrayList<CharSequence> sponsoredSelect;
     private String sponsoredChoosed;
     private ArrayList<CharSequence> tags;
     private String tagChoosed;
 
     private Spinner spinnerSponsored;
     private Spinner spinnerTags;
+
+    private EditText editText;
 
     private Button validationSponsored;
     private Button validationTags;
@@ -34,7 +50,8 @@ public class PictureChooseActivity extends AppCompatActivity implements AdapterV
         Utils.onActivityCreateSetTheme(this,choice);
         setContentView(R.layout.activity_picture_choose);
 
-        sponsored = new ArrayList<>();
+        sponsoredDisplay = new ArrayList<>();
+        sponsoredSelect = new ArrayList<>();
         tags = new ArrayList<>();
 
         spinnerSponsored = findViewById(R.id.spinner_sponsored);
@@ -44,6 +61,8 @@ public class PictureChooseActivity extends AppCompatActivity implements AdapterV
         spinnerTags = findViewById(R.id.spinner_tags);
         spinnerTags.setTag(1);
         spinnerTags.setOnItemSelectedListener(this);
+
+        editText = findViewById(R.id.choose_picture_tag_research);
 
         validationSponsored = findViewById(R.id.choose_picture_validation_sponsored);
         validationSponsored.setTag(0);
@@ -58,7 +77,7 @@ public class PictureChooseActivity extends AppCompatActivity implements AdapterV
         validationTags.setOnClickListener(this);
 
         fetchSponsored();
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, sponsored);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, sponsoredDisplay);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
@@ -66,19 +85,106 @@ public class PictureChooseActivity extends AppCompatActivity implements AdapterV
     }
 
     private void fetchSponsored(){
-        sponsored.clear();
-        sponsored.add("rhino");
-        sponsored.add("fourvière");
-        sponsored.add("Gaston Berger");
-        sponsored.add("Capelle");
+        sponsoredDisplay.clear();
+        sponsoredSelect.add("basilique_fourviere");
+        sponsoredDisplay.add("Basilique de Fourvière");
+
+        sponsoredSelect.add("beaux_arts");
+        sponsoredDisplay.add("Beaux Arts");
+
+        sponsoredSelect.add("bellecour");
+        sponsoredDisplay.add("Place Bellecour");
+
+        sponsoredSelect.add("bmc");
+        sponsoredDisplay.add("Bibliothèque Marie Curie");
+
+        sponsoredSelect.add("cite_internationale");
+        sponsoredDisplay.add("La cité internationnale");
+
+
+        sponsoredSelect.add("cone_insa");
+        sponsoredDisplay.add("Cone INSA");
+
+        sponsoredSelect.add("hotel_dieu");
+        sponsoredDisplay.add("Hotel Dieu");
+
+        sponsoredSelect.add("mur_insa");
+        sponsoredDisplay.add("Mur de l'Insa");
+
+        sponsoredSelect.add("musee_confluences");
+        sponsoredDisplay.add("Musée des Confluences");
+
+        sponsoredSelect.add("opera");
+        sponsoredDisplay.add("Opéra");
+
+        sponsoredSelect.add("palais_justice");
+        sponsoredDisplay.add("Palais de Justice");
+
+        sponsoredSelect.add("part_dieu");
+        sponsoredDisplay.add("La Part-Dieu");
+
+        sponsoredSelect.add("pont_raymond_barre");
+        sponsoredDisplay.add("Pont Raymond-Barre");
+
+        sponsoredSelect.add("rhino_insa");
+        sponsoredDisplay.add("Le thino de l'INSA");
+
+        sponsoredSelect.add("saint_jean");
+        sponsoredDisplay.add("La cathédrale Saint-Jean");
+
+        sponsoredSelect.add("saint_paul");
+        sponsoredDisplay.add("Gare de Lyon-Saint-Paul");
+
+        sponsoredSelect.add("terreaux");
+        sponsoredDisplay.add("Place des Terreaux");
+
+        sponsoredSelect.add("theatre_celestins");
+        sponsoredDisplay.add("Théâtre Celestins");
+
+        sponsoredSelect.add("theatre_fourviere");
+        sponsoredDisplay.add("Théâtre Fourvière");
+
+        sponsoredSelect.add("scutu");
+        sponsoredDisplay.add("Marian Scuturici");
     }
 
     private void fetchtags(){
         tags.clear();
-        tags.add("chat");
-        tags.add("chien");
-        tags.add("souris");
-        tags.add("lion");
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = getString(R.string.db_fetch_tags);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("label", editText.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(jsonObject);
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                        try {
+                            JSONArray array = new JSONArray(response.getJSONArray("labels"));
+                            for (int i = 0; i < array.length(); i++) {
+                                // On récupère un objet JSON du tableau
+                                tags.add(array.getString(i));
+                                System.out.println(tags);
+                                ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(PictureChooseActivity.this,android.R.layout.simple_spinner_item, tags);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerTags.setAdapter(adapter);
+                            }
+                        }catch(JSONException e){e.printStackTrace();}
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("ERROR : "+error);
+            }
+        });
+        getRequest.setRetryPolicy(new DefaultRetryPolicy(15000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(getRequest);
     }
 
     @Override
@@ -94,16 +200,13 @@ public class PictureChooseActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onClick(View v) {
         if(v.getTag() == validationSponsored.getTag()){
-            sponsoredChoosed = (String) spinnerSponsored.getSelectedItem();
+            sponsoredChoosed = (String) sponsoredSelect.get(spinnerSponsored.getSelectedItemPosition());
             close(sponsoredChoosed,true);
         }else if(v.getTag() == validationTags.getTag()){
             tagChoosed = (String) spinnerTags.getSelectedItem();
             close(tagChoosed,false);
         }else if(v.getTag() == searchTags.getTag()){
             fetchtags();
-            ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, tags);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerTags.setAdapter(adapter);
         }
     }
 

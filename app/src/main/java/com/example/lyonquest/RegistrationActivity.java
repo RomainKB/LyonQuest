@@ -349,6 +349,7 @@ public class RegistrationActivity extends AppCompatActivity implements LoaderCal
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            System.out.println("REGISTRATION");
             String url =getString(R.string.db_registration_url);
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
                     new Response.Listener<JSONObject>() {
