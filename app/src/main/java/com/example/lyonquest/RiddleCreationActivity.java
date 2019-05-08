@@ -182,9 +182,41 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
                 custom = fragmentPictRiddleCreation.isCustom();
                 nextRiddlePict();
             }
+        }else if (fragment instanceof FragmentDestPictRiddleCreation) {
+            System.out.println("DEST PICT");
+            FragmentDestPictRiddleCreation fragmentDestPictRiddleCreation = (FragmentDestPictRiddleCreation) fragment;
+            if (fragmentDestPictRiddleCreation.isChoosen()) {
+                System.out.println("CHOOSEN");
+                answer = fragmentDestPictRiddleCreation.getAnswer();
+                System.out.println("ANSWER :::" + answer);
+                custom = fragmentDestPictRiddleCreation.isCustom();
+                latitude = fragmentDestPictRiddleCreation.getLatitude();
+                longitude = fragmentDestPictRiddleCreation.getLongitude();
+                delta = fragmentDestPictRiddleCreation.getDelta();
+                nextRiddleDestPict();
+            }
         }
 
+    }
 
+    private void nextRiddleDestPict() {
+        String text = editTextRiddleText.getText().toString();
+        View focusView = null;
+
+        boolean complete = true;
+        if(TextUtils.isEmpty(text)){
+            editTextRiddleText.setError(getString(R.string.error_field_required));
+            focusView = editTextRiddleText;
+            complete = false;
+        }
+
+        DestPictRiddle riddle = new DestPictRiddle("",text,latitude,longitude,delta,answer,custom);
+        System.out.println("COMPLETE = "+complete);
+        if(complete) {
+            addRiddle(riddle);
+        }else{
+            focusView.requestFocus();
+        }
     }
 
     private void nextRiddlePict() {
@@ -257,6 +289,7 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
 
     private void addRiddle(Riddle riddle)
     {
+        System.out.println("ADDRIDDLE");
         route.getRiddles().add(riddle);
 
         Intent intent = new Intent(this, RiddleCreationActivity.class);
@@ -280,6 +313,8 @@ public class RiddleCreationActivity extends FragmentActivity implements View.OnC
             case 2:
                 fragment = FragmentPictRiddleCreation.newInstance();
                 break;
+            case 3:
+                fragment = FragmentDestPictRiddleCreation.newInstance();
         }
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.riddle_creation_fragment_layout, fragment);

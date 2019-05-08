@@ -62,6 +62,7 @@
         <item>Mot de passe</item>
         <item>Géolocalisation</item>
         <item>Photo</item>
+        <item>Photo + Géolocalisation</item>
     </string-array>
 
 
@@ -117,7 +118,7 @@
     <string name="picture">Photo</string>
     <string name="db_picture">picture</string>
     <string name="title_activity_maps">Map</string>
-    <string name="riddle_creation_ask_delta">Delta</string>
+    <string name="riddle_creation_ask_delta">Précision requise en metre</string>
     <string name="riddle_creation_cancel">Annuler</string>
 
     <!-- TODO: Remove or change this placeholder text -->

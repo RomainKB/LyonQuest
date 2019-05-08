@@ -1,5 +1,6 @@
 package com.example.lyonquest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class DestPictRiddle extends Riddle {
@@ -9,6 +10,10 @@ public class DestPictRiddle extends Riddle {
      */
     private double mLatitude;
     private double mLongitude;
+
+    private double delta;
+    private String label;
+    private boolean custom;
 
 
     /**
@@ -23,8 +28,33 @@ public class DestPictRiddle extends Riddle {
         this.setmLongitude(longitude);
     }
 
+    public DestPictRiddle(String mTitle, String mDescription, double latitude, double longitude, double delta, String label, boolean custom) {
+        super(mTitle, mDescription);
+        this.setmLatitude(latitude);
+        this.setmLongitude(longitude);
+        this.delta = delta;
+        this.custom = custom;
+        this.label = label;
+    }
+
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
+        try {
+            json.put("text", mDescription);
+            json.put("latitude", mLatitude);
+            json.put("longitude", mLongitude);
+            json.put("delta", delta);
+            json.put("type","destpict");
+            json.put("text", mDescription);
+            json.put("solution", label);
+            if(custom){
+                json.put("method","custom");
+            }else{
+                json.put("method","google");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return json;
     }
 

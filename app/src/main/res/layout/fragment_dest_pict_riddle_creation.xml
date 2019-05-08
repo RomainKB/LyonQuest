@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentDestPictRiddleCreation"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/riddle_creation_choose_localisation"
+        style="@style/TextStyleGene"
+        android:text="@string/riddle_creation_choose_localisation"
+        tools:context=".FragmentDestPictRiddleCreation"
+        />
+    <Button
+        android:id="@+id/riddle_creation_choose_picture"
+        style="@style/TextStyleGene"
+        android:text="@string/riddle_creation_choose_picure"
+        tools:context=".FragmentDestPictRiddleCreation"
+        />
+
+</LinearLayout>

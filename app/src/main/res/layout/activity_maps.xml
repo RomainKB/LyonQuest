@@ -37,6 +37,8 @@
         android:layout_width="match_parent"
         android:text="@string/riddle_creation_choose_localisation"
         tools:context=".MapsActivity"
+        android:maxLines="1"
+        android:singleLine="true"
         />
 
 </LinearLayout>
